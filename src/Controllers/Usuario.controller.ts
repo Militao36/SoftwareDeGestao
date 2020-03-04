@@ -31,7 +31,17 @@ class UsuarioController {
     delete = async (req: Request, res: Response) => {
         try {
             const idUsuario = req.params.id;
-            await new UsuarioRepo().delete(Number(idUsuario));
+            await UsuarioRepo.delete(Number(idUsuario));
+            return res.status(200).json({});
+        } catch (error) {
+            return res.status(400).send('Erro ao deletar usuário');
+        }
+    }
+
+    get = async (req: Request, res: Response) => {
+        try {
+            const idUsuario = req.params.id;
+            await UsuarioRepo.delete(Number(idUsuario));
             return res.status(200).json({});
         } catch (error) {
             return res.status(400).send('Erro ao deletar usuário');

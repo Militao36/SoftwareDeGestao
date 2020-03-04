@@ -11,7 +11,7 @@ class HandleUsuario {
         if (validacoes.length > 0) {
             return validacoes;
         }
-        await new UsuarioRepo().update(usuario);
+        await UsuarioRepo.update(usuario);
         return true;
     }
 }
