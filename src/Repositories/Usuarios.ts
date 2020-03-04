@@ -13,6 +13,10 @@ class Usuarios {
     delete = async (idUsuario: number) => {
         return await knex('usuario').delete().where('idUsuario', '=', idUsuario);
     }
+
+    buscarFiltro = async (sql: string) => {
+        return await knex.raw(sql);
+    }
 }
 
-export default  new Usuarios();
+export default new Usuarios();

@@ -3,4 +3,7 @@ export default interface IUsuario {
     email: string;
     senha: string;
     idEmpresa?: number;
+    ativo?: boolean;
+    createAt?: string;
+    updateAt?: string;
 }

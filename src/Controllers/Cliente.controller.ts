@@ -1,16 +1,20 @@
 import { Request, Response } from 'express';
 
-import UsuarioHandlerSave from '../Handlers/Usuario/UsuarioSave';
-import UsuarioHandlerUpdate from '../Handlers/Usuario/UsuarioUpdate';
+import ClienteHandleSave from '../Handlers/Cliente/ClienteSave';
 
-import UsuarioRepo from '../Repositories/Usuarios';
+import ClienteRepo from '../Repositories/Clientes';
 
-class UsuarioController {
+class ClienteController {
     post = async (req: Request, res: Response) => {
-        const { email, senha } = req.body;
+        const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, estado, email, telefone } = req.body;
         const idEmpresa = 1; // pegar do token depois
 
-        const result = await UsuarioHandlerSave.Handler({ email, senha, ativo: false }, idEmpresa);
+        const result = await ClienteHandleSave.Handler({
+            nome, cpfCnpj, ie, subTributario, endereco,
+            numero, complemento, bairro, cidade, estado,
+            email, telefone,
+        }, idEmpresa);
+
         if (Array.isArray(result)) {
             return res.json({ validacoes: result });
         }
@@ -18,29 +22,35 @@ class UsuarioController {
     }
 
     put = async (req: Request, res: Response) => {
-        const { email, senha } = req.body;
+        const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, estado, email, telefone } = req.body;
         const idEmpresa = 1; // pegar do token depois
 
-        const result = await UsuarioHandlerUpdate.Handler({ email, senha, idUsuario: Number(req.params.id) }, idEmpresa);
+        const result = await ClienteHandleSave.Handler({
+            nome, cpfCnpj, ie, subTributario, endereco,
+            numero, complemento, bairro, cidade, estado,
+            email, telefone,
+            idCliente: Number(req.params.id),
+        }, idEmpresa);
+
         if (Array.isArray(result)) {
             return res.json({ validacoes: result });
         }
-        return res.status(200).json({});
+        return res.status(203).json({ id: result });
     }
 
     delete = async (req: Request, res: Response) => {
         try {
-            const idUsuario = req.params.id;
-            await UsuarioRepo.delete(Number(idUsuario));
+            const idCliente = req.params.id;
+            await ClienteRepo.delete(Number(idCliente));
             return res.status(200).json({});
         } catch (error) {
-            return res.status(400).send('Erro ao deletar usuário');
+            return res.status(400).send('Erro ao deletar cliente');
         }
     }
 
     buscarFiltro = async (req: Request, res: Response) => {
         try {
-            let sql = 'SELECT * FROM usuario ';
+            let sql = 'SELECT * FROM cliente ';
             const query = req.query;
             const keys = Object.keys(query);
             for (const item of keys) {
@@ -52,12 +62,12 @@ class UsuarioController {
                     sql += `WHERE ${item} = '${query[item]}'`;
                 }
             }
-            const result = await UsuarioRepo.buscarFiltro(sql);
+            const result = await ClienteRepo.buscarFiltro(sql);
             return res.status(200).json(result[0]);
         } catch (error) {
-            return res.status(400).send('Erro ao pesquisar usuários');
+            return res.status(400).send('Erro ao pesquisar clientes');
         }
     }
 }
 
-export default UsuarioController;
+export default ClienteController;

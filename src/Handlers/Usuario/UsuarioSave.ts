@@ -1,11 +1,13 @@
-import IUsuario from '../Interfaces/IUsuario';
-import UsuarioRepo from '../Repositories/Usuarios';
+import IUsuario from '../../Interfaces/IUsuario';
+import UsuarioRepo from '../../Repositories/Usuarios';
 
-import ValidatorUser from '../Validators/Usuario';
+import ValidatorUser from '../../Validators/Usuario';
+
+import { DateTime } from 'luxon';
 
 class HandleUsuario {
     Handler = async (user: IUsuario, idEmpresa: number) => {
-        const usuario = { ...user, idEmpresa };
+        const usuario = { ...user, idEmpresa, ativo: false, createAt: DateTime.local().toSQLDate() };
 
         const validacoes = ValidatorUser(usuario);
         if (validacoes.length > 0) {
