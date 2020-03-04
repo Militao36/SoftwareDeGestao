@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import UsuarioHandlerSave from '../Handlers/UsuarioSave';
 import UsuarioHandlerUpdate from '../Handlers/UsuarioUpdate';
 
+import UsuarioRepo from '../Repositories/Usuarios';
+
 class UsuarioController {
     post = async (req: Request, res: Response) => {
         const { email, senha } = req.body;
@@ -24,6 +26,16 @@ class UsuarioController {
             return res.json({ validacoes: result });
         }
         return res.status(200).json({});
+    }
+
+    delete = async (req: Request, res: Response) => {
+        try {
+            const idUsuario = req.params.id;
+            await new UsuarioRepo().delete(Number(idUsuario));
+            return res.status(200).json({});
+        } catch (error) {
+            return res.status(400).send('Erro ao deletar usuário');
+        }
     }
 }
 
