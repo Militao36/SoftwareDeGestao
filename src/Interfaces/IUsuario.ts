@@ -1,5 +1,5 @@
 export default interface IUsuario {
-    idUsuario: number;
+    idUsuario?: number;
     email: string;
     senha: string;
     idEmpresa?: number;

@@ -11,8 +11,8 @@ class HandleUsuario {
         if (validacoes.length > 0) {
             return validacoes;
         }
-        const retorno = await new UsuarioRepo().save(usuario);
-        return Number(1);
+        await new UsuarioRepo().update(usuario);
+        return true;
     }
 }
 
