@@ -31,3 +31,15 @@ create table cliente(
     updateAt date
 );
 
+
+create table produto(
+    idProduto int auto_increment primary key,
+    codBarras varchar(150),
+    nomeProduto varchar(100),
+    valor decimal(13,2),
+    estoque int,
+    estoqueMin int,
+    idEmpresa int,
+    createAt date,
+    updateAt date
+);
