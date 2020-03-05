@@ -65,7 +65,6 @@ create table produto(
     updateAt date
 );
 
-
 CREATE TABLE funcionario(
     idFuncionario int AUTO_INCREMENT PRIMARY KEY,
     idEmpresa int,
