@@ -65,7 +65,30 @@ create table produto(
     updateAt date
 );
 
--- create table funcionario(
---     idFuncionario int auto_increment primary key,
 
--- );
+CREATE TABLE funcionario(
+    idFuncionario int AUTO_INCREMENT PRIMARY KEY,
+    idEmpresa int,
+    nome varchar(150) NOT NULL,
+    cpf varchar(20),
+    rg varchar(15),
+    logradouro varchar(150),
+    numero varchar(20),
+    complemento varchar(100),
+    bairro varchar(100),
+    cidade varchar(100),
+    uf varchar(2),
+    cep varchar(15),
+    telefone varchar(20),
+    celular varchar(20),
+    email varchar(100),
+    observacao varchar(100),
+    salario decimal(13,2),
+    dataAdmissao date,
+    comissao decimal(13,2),
+    diaPagamento int,
+    dataDemissao date,
+    createAt date,
+    updateAt date
+);
+
