@@ -6,6 +6,7 @@ export default interface IProduto {
     estoque: number;
     estoqueMin: number;
     idEmpresa?: number;
+    idFornecedor?: number;
     createAt?: string;
     updateAt?: string;
 }

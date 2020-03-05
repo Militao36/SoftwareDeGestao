@@ -11,7 +11,6 @@ create table usuario(
     updateAt: date,
 );
 
-
 create table cliente(
     idCliente int auto_increment primary key,
     nome varchar(100),
@@ -31,6 +30,26 @@ create table cliente(
     updateAt date
 );
 
+CREATE TABLE fornecedor(
+    idFornecedor int AUTO_INCREMENT PRIMARY KEY,
+    idEmpresa int,
+    razaoSocial varchar(150),
+    nomeFantasia varchar(150),
+    logradouro varchar(150),
+    numero varchar(20),
+    complemento varchar(100),
+    bairro varchar(100),
+    cep varchar(10),
+    cidade varchar(100),
+    uf varchar(2),
+    telefone varchar(20),
+    celular varchar(20),
+    cnpjCpf varchar(20),
+    ie varchar(20),
+    email varchar(50),
+    createAt date,
+    updateAt date
+);
 
 create table produto(
     idProduto int auto_increment primary key,
@@ -40,6 +59,13 @@ create table produto(
     estoque int,
     estoqueMin int,
     idEmpresa int,
+    idFornecedor int,
+    FOREIGN KEY (idFornecedor) REFERENCES fornecedor (idFornecedor),
     createAt date,
     updateAt date
 );
+
+-- create table funcionario(
+--     idFuncionario int auto_increment primary key,
+
+-- );

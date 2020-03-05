@@ -7,10 +7,10 @@ import ProdutoRepo from '../Repositories/Produtos';
 
 class ProdutoController {
     post = async (req: Request, res: Response) => {
-        const { codBarras, nomeProduto, valor, estoque, estoqueMin } = req.body;
+        const { codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor } = req.body;
         const idEmpresa = 1; // pegar do token depois
 
-        const result = await ProdutoHandlerSave.Handler({ codBarras, nomeProduto, valor, estoque, estoqueMin }, idEmpresa);
+        const result = await ProdutoHandlerSave.Handler({ codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor }, idEmpresa);
         if (Array.isArray(result)) {
             return res.json({ validacoes: result });
         }
@@ -18,11 +18,11 @@ class ProdutoController {
     }
 
     put = async (req: Request, res: Response) => {
-        const { codBarras, nomeProduto, valor, estoque, estoqueMin } = req.body;
+        const { codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor } = req.body;
         const idEmpresa = 1; // pegar do token depois
 
         const result = await ProdutoHandlerUpdate.Handler({
-            codBarras, nomeProduto, valor, estoque, estoqueMin, idProduto: Number(req.params.id),
+            codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor, idProduto: Number(req.params.id),
         }, idEmpresa);
         if (Array.isArray(result)) {
             return res.json({ validacoes: result });
