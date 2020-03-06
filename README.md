@@ -14,3 +14,5 @@
 - Fornecedor
 - Produto
 - Funcionario
+- Status pedido
+- Pedido

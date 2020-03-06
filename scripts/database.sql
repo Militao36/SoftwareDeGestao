@@ -105,7 +105,7 @@ create table pedido (
     idStatusPedido int,
     idFuncionario int,
     valorComissao decimal(13,2),
-    observacao int,
+    observacao varchar(30),
     numeroReferencia varchar(20),
     FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario),
     FOREIGN KEY (idCliente) REFERENCES cliente (idCliente),
