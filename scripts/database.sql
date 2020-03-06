@@ -7,8 +7,8 @@ create table usuario(
     email varchar(100) not null,
     senha varchar(150) not null,
     idEmpresa int,
-    createAt: date,
-    updateAt: date,
+    createAt date,
+    updateAt date
 );
 
 create table cliente(
@@ -60,9 +60,9 @@ create table produto(
     estoqueMin int,
     idEmpresa int,
     idFornecedor int,
-    FOREIGN KEY (idFornecedor) REFERENCES fornecedor (idFornecedor),
     createAt date,
-    updateAt date
+    updateAt date,
+    FOREIGN KEY (idFornecedor) REFERENCES fornecedor (idFornecedor)
 );
 
 CREATE TABLE funcionario(
@@ -90,4 +90,38 @@ CREATE TABLE funcionario(
     createAt date,
     updateAt date
 );
+
+create table statusPedido(
+    idStatusPedido int auto_increment primary key,
+    idEmpresa int,
+    nomeStatus varchar(20)
+);
+
+create table pedido (
+    idPedido int auto_increment primary key,
+    idEmpresa int,
+    idCliente int,
+    dataPedido date,
+    idStatusPedido int,
+    idFuncionario int,
+    valorComissao decimal(13,2),
+    observacao int,
+    numeroReferencia varchar(20),
+    FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario),
+    FOREIGN KEY (idCliente) REFERENCES cliente (idCliente),
+    FOREIGN KEY (idStatusPedido) REFERENCES statusPedido (idStatusPedido)
+);
+
+create table produtoPedido(
+    idProdutoPedido int auto_increment primary key,
+    idEmpresa int,
+    idProduto int,
+    quantidade int,
+    valor decimal(13,2),
+    desconto decimal(3,2),
+    observacao varchar(40),
+    FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
+);
+
+
 
