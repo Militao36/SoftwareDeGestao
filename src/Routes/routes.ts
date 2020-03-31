@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import UsuarioRoutes from './Usuario';
-import ClienteRoutes from './Produto';
-import ProdutoRoutes from './Cliente';
+import ClienteRoutes from './Cliente';
+import ProdutoRoutes from './Produto';
 import ForncedorRoutes from './Fornecedor';
 import FuncionarioRoutes from './Funcionario';
 import Pedido from './Pedido';

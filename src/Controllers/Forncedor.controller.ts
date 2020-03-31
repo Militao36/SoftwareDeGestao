@@ -4,6 +4,7 @@ import ForncedorHandlerSave from '../Handlers/Forncedor/ForncedorSave';
 import ForncedorHandlerUpdate from '../Handlers/Forncedor/ForncedorUpdate';
 
 import FornecedorRepo from '../Repositories/Fornecedor';
+import Redis from '../Config/redis';
 
 class ForncedorController {
     post = async (req: Request, res: Response) => {
@@ -49,6 +50,7 @@ class ForncedorController {
 
     buscarFiltro = async (req: Request, res: Response) => {
         try {
+            const idEmpresa = 1;
             let sql = 'SELECT * FROM fornecedor ';
             const query = req.query;
             const keys = Object.keys(query);
@@ -61,7 +63,13 @@ class ForncedorController {
                     sql += `WHERE ${item} = '${query[item]}'`;
                 }
             }
+            sql += ` and idEmpresa = ${idEmpresa}`;
+            const cache = await Redis.getCache('fornecedor' + idEmpresa);
+            if (cache) {
+                return res.status(200).json({ cache: true, dados: cache });
+            }
             const result = await FornecedorRepo.buscarFiltro(sql);
+            await Redis.setCache('fornecedor' + idEmpresa, JSON.stringify(result[0]));
             return res.status(200).json(result[0]);
         } catch (error) {
             return res.status(400).send('Erro ao pesquisar fornecedors');
