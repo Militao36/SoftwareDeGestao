@@ -7,7 +7,7 @@ class Fornecedor {
     }
 
     update = async (fornecedor: IForncedor) => {
-        return await knex('fornecedor').update(fornecedor).where('idFornecedor', '=', fornecedor.idFornecedor);
+        return await knex('fornecedor').update(fornecedor).where('idFornecedor', '=', fornecedor.idFornecedor  as number);
     }
 
     delete = async (idFornecedor: number) => {

@@ -7,7 +7,7 @@ class StatusPedido {
     }
 
     update = async (statusPedido: IStatusPedido) => {
-        return await knex('statusPedido').update(statusPedido).where('idStatusPedido', '=', statusPedido.idStatusPedido);
+        return await knex('statusPedido').update(statusPedido).where('idStatusPedido', '=', statusPedido.idStatusPedido  as number);
     }
 
     delete = async (idStatusPedido: number) => {

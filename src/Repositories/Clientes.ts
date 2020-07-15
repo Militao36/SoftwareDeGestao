@@ -7,7 +7,7 @@ class Clientes {
     }
 
     update = async (cliente: IClientes) => {
-        return await knex('cliente').update(cliente).where('idCliente', '=', cliente.idCliente);
+        return await knex('cliente').update(cliente).where('idCliente', '=', cliente.idCliente as number);
     }
 
     delete = async (idCliente: number) => {

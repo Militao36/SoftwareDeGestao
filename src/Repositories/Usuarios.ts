@@ -7,7 +7,7 @@ class Usuarios {
     }
 
     update = async (user: IUsuario) => {
-        return await knex('usuario').update(user).where('idUsuario', '=', user.idUsuario);
+        return await knex('usuario').update(user).where('idUsuario', '=', user.idUsuario  as number);
     }
 
     delete = async (idUsuario: number) => {

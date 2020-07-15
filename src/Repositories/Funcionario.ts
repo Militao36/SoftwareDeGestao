@@ -7,7 +7,7 @@ class Funcionario {
     }
 
     update = async (funcionario: IFuncionario) => {
-        return await knex('funcionario').update(funcionario).where('idFuncionario', '=', funcionario.idFuncionario);
+        return await knex('funcionario').update(funcionario).where('idFuncionario', '=', funcionario.idFuncionario  as number);
     }
 
     delete = async (idFuncionario: number) => {

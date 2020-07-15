@@ -7,7 +7,7 @@ class Produtos {
     }
 
     update = async (produto: IProduto) => {
-        return await knex('produto').update(produto).where('idProduto', '=', produto.idProduto);
+        return await knex('produto').update(produto).where('idProduto', '=', produto.idProduto  as number);
     }
 
     delete = async (idProduto: number) => {
