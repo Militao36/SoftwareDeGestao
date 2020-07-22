@@ -6,9 +6,11 @@ import ForncedorRoutes from './Fornecedor.js';
 import FuncionarioRoutes from './Funcionario';
 import Pedido from './Pedido';
 import StatusPedido from './StatusPedido';
+import Home from './Home';
 
 const router = Router();
 
+router.use('/', Home);
 router.use('/Usuario', UsuarioRoutes);
 router.use('/Cliente', ClienteRoutes);
 router.use('/Produto', ProdutoRoutes);

@@ -1,5 +1,6 @@
 import express from 'express';
 import Routes from './Routes/routes';
+import path from 'path'
 
 class App {
     constructor() {
@@ -9,6 +10,9 @@ class App {
     }
 
     middlewares() {
+        this.express.set('views', path.join(__dirname, 'views'));
+        this.express.set('view engine', 'ejs');
+
         this.express.use(express.json());
     }
 
