@@ -49,7 +49,7 @@ class ClienteController {
 
     buscarFiltro = async (req, res) => {
         try {
-            const idEmpresa = 1;
+            const idEmpresa = req.idEmpresa;
             let sql = 'SELECT * FROM cliente ';
             const query = req.query;
             const keys = Object.keys(query);

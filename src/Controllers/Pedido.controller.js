@@ -7,7 +7,7 @@ import PeidoRepo from '../Repositories/Pedido';
 class PedidoController {
     post = async (req, res) => {
         const { idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa;
 
         const result = await PedidoHandleSave.Handler({
             idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia,
@@ -21,7 +21,7 @@ class PedidoController {
     put = async (req, res) => {
         const { idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia } = req.body;
 
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa;
 
         const result = await PedidoHandleUpdate.Handler({
             idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia,

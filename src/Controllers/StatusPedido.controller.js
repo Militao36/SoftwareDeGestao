@@ -6,7 +6,7 @@ import StatusPedidoRepo from '../Repositories/StatusPedido';
 class StatusPedidoController {
     post = async (req, res) => {
         const { nomeStatus } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await StatusPedidoHandleSave.Handler({ nomeStatus }, idEmpresa);
         if (Array.isArray(result)) {
@@ -17,7 +17,7 @@ class StatusPedidoController {
 
     put = async (req, res) => {
         const { nomeStatus } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await StatusPedidoHandleUpdate.Handler({
             nomeStatus, idStatusPedido: Number(req.params.id),

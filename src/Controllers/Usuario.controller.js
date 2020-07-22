@@ -7,7 +7,7 @@ import UsuarioRepo from '../Repositories/Usuarios';
 class UsuarioController {
     post = async (req, res) => {
         const { email, senha } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await UsuarioHandlerSave.Handler({ email, senha, ativo: false }, idEmpresa);
         if (Array.isArray(result)) {
@@ -18,7 +18,7 @@ class UsuarioController {
 
     put = async (req, res) => {
         const { email, senha } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await UsuarioHandlerUpdate.Handler({ email, senha, idUsuario: Number(req.params.id) }, idEmpresa);
         if (Array.isArray(result)) {

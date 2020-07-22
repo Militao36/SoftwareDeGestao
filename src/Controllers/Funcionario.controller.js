@@ -8,7 +8,7 @@ class ForncedorController {
     post = async (req, res) => {
         const { nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
             telefone, celular, email, observacao, salario, dataAdmissao, comissao, diaPagamento, dataDemissao } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await FuncionarioHandlerSave.Handler({
             nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
@@ -24,7 +24,7 @@ class ForncedorController {
         const { nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
             telefone, celular, email, observacao, salario, dataAdmissao, comissao, diaPagamento, dataDemissao, idFuncionario } = req.body;
 
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await FuncionarioHandlerUpdate.Handler({
             nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
@@ -49,7 +49,7 @@ class ForncedorController {
 
     buscarFiltro = async (req, res) => {
         try {
-            const idEmpresa = 1;
+            const idEmpresa = req.idEmpresa;
             let sql = 'SELECT * FROM fornecedor ';
             const query = req.query;
             const keys = Object.keys(query);

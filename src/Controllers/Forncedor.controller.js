@@ -5,7 +5,7 @@ import FornecedorRepo from '../Repositories/Fornecedor';
 class ForncedorController {
     post = async (req, res) => {
         const { razaoSocial, nomeFantasia, logradouro, numero, complemento, bairro, cep, cidade, uf, telefone, celular, cnpjCpf, ie, email } = req.body;
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await ForncedorHandlerSave.Handler({
             razaoSocial, nomeFantasia, logradouro, numero,
@@ -21,7 +21,7 @@ class ForncedorController {
         const { razaoSocial, nomeFantasia, logradouro, numero, complemento, bairro, cep,
             cidade, uf, telefone, celular, cnpjCpf, ie, email, idFornecedor } = req.body;
 
-        const idEmpresa = 1; // pegar do token depois
+        const idEmpresa = req.idEmpresa; 
 
         const result = await ForncedorHandlerUpdate.Handler({
             razaoSocial, nomeFantasia, logradouro, numero,
@@ -46,7 +46,7 @@ class ForncedorController {
 
     buscarFiltro = async (req, res) => {
         try {
-            const idEmpresa = 1;
+            const idEmpresa = req.idEmpresa;
             let sql = 'SELECT * FROM fornecedor ';
             const query = req.query;
             const keys = Object.keys(query);
