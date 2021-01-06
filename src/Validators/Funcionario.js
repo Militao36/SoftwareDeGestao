@@ -1,4 +1,4 @@
-import IsEmail from '../Utils/isEmail';
+import { IsEmail } from '../Utils/isEmail';
 
 export default (funcionario) => {
     const erros = [];
