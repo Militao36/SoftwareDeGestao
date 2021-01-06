@@ -1,20 +1,20 @@
 import knex from '../Config/conn';
 
 class Funcionario {
-    save = async (funcionario) => {
-        return await knex('funcionario').insert(funcionario);
+    save(funcionario) {
+        return knex('funcionario').insert(funcionario);
     }
 
-    update = async (funcionario) => {
-        return await knex('funcionario').update(funcionario).where('idFuncionario', '=', funcionario.idFuncionario);
+    update(funcionario) {
+        return knex('funcionario').update(funcionario).where('idFuncionario', '=', funcionario.idFuncionario);
     }
 
-    delete = async (idFuncionario) => {
-        return await knex('funcionario').delete().where('idFuncionario', '=', idFuncionario);
+    delete(idFuncionario) {
+        return knex('funcionario').delete().where('idFuncionario', '=', idFuncionario);
     }
 
-    buscarFiltro = async (sql) => {
-        return await knex.raw(sql);
+    buscarFiltro(sql) {
+        return knex.raw(sql);
     }
 }
 

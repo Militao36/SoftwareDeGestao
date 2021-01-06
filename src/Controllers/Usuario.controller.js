@@ -5,9 +5,9 @@ import UsuarioHandlerUpdate from '../Handlers/Usuario/UsuarioUpdate';
 import UsuarioRepo from '../Repositories/Usuarios';
 
 class UsuarioController {
-    post = async (req, res) => {
+    async post(req, res) {
         const { email, senha } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await UsuarioHandlerSave.Handler({ email, senha, ativo: false }, idEmpresa);
         if (Array.isArray(result)) {
@@ -16,9 +16,9 @@ class UsuarioController {
         return res.status(203).json({ id: result });
     }
 
-    put = async (req, res) => {
+    async put(req, res) {
         const { email, senha } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await UsuarioHandlerUpdate.Handler({ email, senha, idUsuario: Number(req.params.id) }, idEmpresa);
         if (Array.isArray(result)) {
@@ -27,7 +27,7 @@ class UsuarioController {
         return res.status(200).json({});
     }
 
-    delete = async (req, res) => {
+    async delete(req, res) {
         try {
             const idUsuario = req.params.id;
             await UsuarioRepo.delete(Number(idUsuario));
@@ -37,7 +37,7 @@ class UsuarioController {
         }
     }
 
-    buscarFiltro = async (req, res) => {
+    async buscarFiltro(req, res) {
         try {
             let sql = 'SELECT * FROM usuario ';
             const query = req.query;

@@ -3,9 +3,9 @@ import ForncedorHandlerUpdate from '../Handlers/Forncedor/ForncedorUpdate';
 import FornecedorRepo from '../Repositories/Fornecedor';
 
 class ForncedorController {
-    post = async (req, res) => {
+    async post(req, res) {
         const { razaoSocial, nomeFantasia, logradouro, numero, complemento, bairro, cep, cidade, uf, telefone, celular, cnpjCpf, ie, email } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await ForncedorHandlerSave.Handler({
             razaoSocial, nomeFantasia, logradouro, numero,
@@ -17,11 +17,11 @@ class ForncedorController {
         return res.status(203).json({ id: result });
     }
 
-    put = async (req, res) => {
+    async put(req, res) {
         const { razaoSocial, nomeFantasia, logradouro, numero, complemento, bairro, cep,
             cidade, uf, telefone, celular, cnpjCpf, ie, email, idFornecedor } = req.body;
 
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await ForncedorHandlerUpdate.Handler({
             razaoSocial, nomeFantasia, logradouro, numero,
@@ -34,7 +34,7 @@ class ForncedorController {
         return res.status(200).json({});
     }
 
-    delete = async (req, res) => {
+    async delete(req, res) {
         try {
             const idFornecedor = req.params.id;
             await FornecedorRepo.delete(Number(idFornecedor));
@@ -44,7 +44,7 @@ class ForncedorController {
         }
     }
 
-    buscarFiltro = async (req, res) => {
+    async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
             let sql = 'SELECT * FROM fornecedor ';

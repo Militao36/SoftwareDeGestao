@@ -5,7 +5,7 @@ import PedidoHandleUpdate from '../Handlers/Pedido/PedidoUpdate';
 import PeidoRepo from '../Repositories/Pedido';
 
 class PedidoController {
-    post = async (req, res) => {
+    async post(req, res) {
         const { idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia } = req.body;
         const idEmpresa = req.idEmpresa;
 
@@ -18,7 +18,7 @@ class PedidoController {
         return res.status(203).json({ id: result });
     }
 
-    put = async (req, res) => {
+    async put(req, res) {
         const { idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia } = req.body;
 
         const idEmpresa = req.idEmpresa;
@@ -32,7 +32,7 @@ class PedidoController {
         return res.status(200).json({});
     }
 
-    delete = async (req, res) => {
+    async delete(req, res) {
         try {
             const idFornecedor = req.params.id;
             await PeidoRepo.delete(Number(idFornecedor));
@@ -42,7 +42,7 @@ class PedidoController {
         }
     }
 
-    buscarFiltro = async (req, res) => {
+    async buscarFiltro(req, res) {
         try {
             let sql = 'SELECT * FROM pedido ';
             const query = req.query;

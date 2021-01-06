@@ -4,9 +4,9 @@ import StatusPedidoHandleUpdate from '../Handlers/StatusPedido/StatusUpdate';
 import StatusPedidoRepo from '../Repositories/StatusPedido';
 
 class StatusPedidoController {
-    post = async (req, res) => {
+    async post(req, res) {
         const { nomeStatus } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await StatusPedidoHandleSave.Handler({ nomeStatus }, idEmpresa);
         if (Array.isArray(result)) {
@@ -15,9 +15,9 @@ class StatusPedidoController {
         return res.status(203).json({ id: result });
     }
 
-    put = async (req, res) => {
+    async put(req, res) {
         const { nomeStatus } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await StatusPedidoHandleUpdate.Handler({
             nomeStatus, idStatusPedido: Number(req.params.id),
@@ -28,7 +28,7 @@ class StatusPedidoController {
         return res.status(200).json({});
     }
 
-    delete = async (req, res) => {
+    async delete(req, res) {
         try {
             const idStatusPedido = req.params.id;
             await StatusPedidoRepo.delete(Number(idStatusPedido));
@@ -38,7 +38,7 @@ class StatusPedidoController {
         }
     }
 
-    buscarFiltro = async (req, res) => {
+    async buscarFiltro(req, res) {
         try {
             let sql = 'SELECT * FROM statusPedido ';
             const query = req.query;

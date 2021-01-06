@@ -3,7 +3,7 @@ import ClienteHandleSave from '../Handlers/Cliente/ClienteSave';
 import ClienteRepo from '../Repositories/Clientes';
 
 class ClienteController {
-    post = async (req, res) => {
+    async post(req, res) {
         const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, estado, email, telefone } = req.body;
 
         const result = await ClienteHandleSave.Handler({
@@ -18,7 +18,7 @@ class ClienteController {
         return res.status(203).json({ id: result });
     }
 
-    put = async (req, res) => {
+    async put(req, res) {
         const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, estado, email, telefone } = req.body;
 
         const result = await ClienteHandleSave.Handler({
@@ -34,7 +34,7 @@ class ClienteController {
         return res.status(203).json({ id: result });
     }
 
-    delete = async (req, res) => {
+    async delete(req, res) {
         try {
             if (Number(req.params.idEmpresa) != req.idEmpresa) {
                 return res.status(401).send('Você está tentando deletar dados que não são seus.')
@@ -47,7 +47,7 @@ class ClienteController {
         }
     }
 
-    buscarFiltro = async (req, res) => {
+    async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
             let sql = 'SELECT * FROM cliente ';

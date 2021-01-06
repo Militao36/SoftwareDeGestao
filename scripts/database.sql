@@ -13,6 +13,7 @@ create table usuario(
 
 create table cliente(
     idCliente int auto_increment primary key,
+    idEmpresa int,
     nome varchar(100),
     cpfCnpj varchar(25),
     ie varchar(25),
@@ -53,12 +54,12 @@ CREATE TABLE fornecedor(
 
 create table produto(
     idProduto int auto_increment primary key,
+    idEmpresa int,
     codBarras varchar(150),
     nomeProduto varchar(100),
     valor decimal(13,2),
     estoque int,
     estoqueMin int,
-    idEmpresa int,
     idFornecedor int,
     createAt date,
     updateAt date,

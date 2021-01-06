@@ -4,9 +4,9 @@ import ProdutoHandlerUpdate from '../Handlers/Produto/ProdutoUpdate';
 import ProdutoRepo from '../Repositories/Produtos';
 
 class ProdutoController {
-    post = async (req, res) => {
+    async post(req, res) {
         const { codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await ProdutoHandlerSave.Handler({ codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor }, idEmpresa);
         if (Array.isArray(result)) {
@@ -15,9 +15,9 @@ class ProdutoController {
         return res.status(203).json({ id: result });
     }
 
-    put = async (req, res) => {
+    async put(req, res) {
         const { codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor } = req.body;
-        const idEmpresa = req.idEmpresa; 
+        const idEmpresa = req.idEmpresa;
 
         const result = await ProdutoHandlerUpdate.Handler({
             codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor, idProduto: Number(req.params.id),
@@ -28,7 +28,7 @@ class ProdutoController {
         return res.status(200).json({});
     }
 
-    delete = async (req, res) => {
+    async delete(req, res) {
         try {
             const idProduto = req.params.id;
             await ProdutoRepo.delete(Number(idProduto));
@@ -38,7 +38,7 @@ class ProdutoController {
         }
     }
 
-    buscarFiltro = async (req, res) => {
+    async buscarFiltro(req, res) {
         try {
             let sql = 'SELECT * FROM produto ';
             const query = req.query;

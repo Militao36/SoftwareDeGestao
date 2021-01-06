@@ -1,20 +1,20 @@
 import knex from '../Config/conn';
 
 class Clientes {
-    save = async (cliente) => {
-        return await knex('cliente').insert(cliente);
+    save(cliente) {
+        return knex('cliente').insert(cliente);
     }
 
-    update = async (cliente) => {
-        return await knex('cliente').update(cliente).where('idCliente', '=', cliente.idCliente );
+    update(cliente) {
+        return knex('cliente').update(cliente).where('idCliente', '=', cliente.idCliente);
     }
 
-    delete = async (idCliente) => {
-        return await knex('cliente').delete().where('idCliente', '=', idCliente);
+    delete(idCliente) {
+        return knex('cliente').delete().where('idCliente', '=', idCliente);
     }
 
-    buscarFiltro = async (sql) => {
-        return await knex.raw(sql);
+    buscarFiltro(sql) {
+        return knex.raw(sql);
     }
 }
 
