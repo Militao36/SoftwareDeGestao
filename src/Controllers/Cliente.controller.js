@@ -1,29 +1,30 @@
 
 import ClienteHandleSave from '../Handlers/Cliente/ClienteSave';
+import ClienteHandleUpdate from '../Handlers/Cliente/ClienteUpdate';
 import ClienteRepo from '../Repositories/Clientes';
 
 class ClienteController {
     async post(req, res) {
-        const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, estado, email, telefone } = req.body;
+        const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, uf, email, telefone } = req.body;
 
         const result = await ClienteHandleSave.Handler({
             nome, cpfCnpj, ie, subTributario, endereco,
-            numero, complemento, bairro, cidade, estado,
+            numero, complemento, bairro, cidade, uf,
             email, telefone,
         }, req.idEmpresa);
 
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
-        return res.status(203).json({ id: result });
+        return res.status(201).json({ id: result });
     }
 
     async put(req, res) {
-        const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, estado, email, telefone } = req.body;
+        const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, uf, email, telefone } = req.body;
 
-        const result = await ClienteHandleSave.Handler({
+        const result = await ClienteHandleUpdate.Handler({
             nome, cpfCnpj, ie, subTributario, endereco,
-            numero, complemento, bairro, cidade, estado,
+            numero, complemento, bairro, cidade, uf,
             email, telefone,
             idCliente: Number(req.params.id),
         }, req.idEmpresa);
@@ -31,7 +32,7 @@ class ClienteController {
         if (Array.isArray(result)) {
             return res.json({ validacoes: result });
         }
-        return res.status(203).json({ id: result });
+        return res.status(204).json();
     }
 
     async delete(req, res) {

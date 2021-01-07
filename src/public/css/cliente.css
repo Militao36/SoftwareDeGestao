@@ -1,0 +1,23 @@
+a {
+    text-decoration: none;
+    color: black;
+  }
+
+  a:hover {
+    color: black;
+  }
+
+  input {
+    margin-top: 10px;
+  }
+
+  .pesquisa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pesquisa select {
+    width: 40%;
+    margin-left: 5px;
+  }

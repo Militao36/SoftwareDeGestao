@@ -23,7 +23,7 @@ create table cliente(
     complemento varchar(50),
     bairro varchar(50),
     cidade varchar(50),
-    estado varchar(2),
+    uf varchar(2),
     email varchar(100),
     telefone varchar(11),
     ativo boolean,

@@ -3,12 +3,22 @@ import { IsEmail } from '../Utils/isEmail';
 export default (cliente) => {
     const erros = [];
 
-    if (!IsEmail(cliente.email)) {
-        erros.push('E-mail incorreto');
+    if (cliente.nome == '') {
+        erros.push({
+            nome: 'O campo nome não pode ficar em branco.'
+        })
+    }
+
+    if (cliente.email && !IsEmail(cliente.email)) {
+        erros.push({
+            email: 'E-mail incorreto'
+        });
     }
 
     if (!cliente.idEmpresa) {
-        erros.push('Está faltando o id da empresa.');
+        erros.push({
+            idEmpresa: 'Está faltando o id da empresa.'
+        });
     }
 
     return erros;
