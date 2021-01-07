@@ -1,3 +1,14 @@
+$('#telefone').mask('(00) 00000-0000');
+const options = {
+    onKeyPress: function (cpf, ev, el, op) {
+        var masks = ['000.000.000-000', '00.000.000/0000-00'];
+        $('#cpfCnpj').mask((cpf.length > 14) ? masks[1] : masks[0], op);
+    }
+}
+
+$('#cpfCnpj').length > 11 ? $('#cpfCnpj').mask('00.000.000/0000-00', options) : $('#cpfCnpj').mask('000.000.000-00#', options);
+
+
 document.getElementById('btnSalvar').addEventListener('click', (e) => {
     e.preventDefault()
 
@@ -11,7 +22,7 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
 function salvarCliente() {
     const data = {
         nome: document.getElementById('nome').value,
-        cpfcnpj: document.getElementById('cpfcnpj').value,
+        cpfCnpj: document.getElementById('cpfCnpj').value,
         endereco: document.getElementById('endereco').value,
         numero: document.getElementById('numero').value,
         complemento: document.getElementById('complemento').value,
@@ -34,7 +45,7 @@ function salvarCliente() {
 function editarCliente() {
     const data = {
         nome: document.getElementById('nome').value,
-        cpfcnpj: document.getElementById('cpfcnpj').value,
+        cpfCnpj: document.getElementById('cpfCnpj').value,
         endereco: document.getElementById('endereco').value,
         numero: document.getElementById('numero').value,
         complemento: document.getElementById('complemento').value,
@@ -77,3 +88,33 @@ function removeInvalidForm() {
         elements[0].classList.remove('invalid-feedback')
     }
 }
+
+function Grid(coluna, text) {
+    if (!text)
+        text = ''
+
+    axios.get(`/Cliente/Search/${coluna}/${text}`)
+        .then(async (response) => {
+            const { data } = response.data;
+            $("#TableCliente tbody").empty()
+            for (const item of data) {
+                $("#TableCliente tbody").append(`
+                    <tr> 
+                        <td>${item.nome}</td> 
+                        <td>${item.cpfCnpj || ''}</td>
+                        <td>${item.cidade || ''}</td>
+                    </tr>
+                `);
+            }
+        })
+}
+
+document.getElementById('txtPesquisa').addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        let texto = document.getElementById('txtPesquisa').value || 'null';
+        let coluna = document.getElementById('selectColuna').value;
+        Grid(coluna, encodeURIComponent(texto));
+    }
+
+    $("#TableCliente tbody").empty()
+});

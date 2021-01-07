@@ -15,7 +15,7 @@ create table cliente(
     idCliente int auto_increment primary key,
     idEmpresa int,
     nome varchar(100),
-    cpfCnpj varchar(25),
+    cpfCnpj varchar(18),
     ie varchar(25),
     subTributario boolean,
     endereco varchar(100),

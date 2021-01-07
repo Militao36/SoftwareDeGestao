@@ -51,24 +51,21 @@ class ClienteController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT * FROM cliente ';
-            const query = req.query;
-            const keys = Object.keys(query);
-            for (const item of keys) {
-                if (item.startsWith('MENOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} < '${query[item]}'`;
-                } else if (item.startsWith('MAIOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} > '${query[item]}'`;
-                } else {
-                    sql += `WHERE ${item} = '${query[item]}'`;
-                }
-            }
+            let sql = 'SELECT nome,cpfCnpj,cidade FROM cliente ';
 
-            sql += ` and idEmpresa = ${idEmpresa}`;
+            if (req.params.text !== 'null') {
+                sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;
+                sql += ` and idEmpresa = ${idEmpresa}`;
+            } else {
+                sql += `where idEmpresa = ${idEmpresa}`;
+            }
+            sql += ' LIMIT 10'
             const result = await ClienteRepo.buscarFiltro(sql);
-            return res.status(200).json({ cache: false, dados: result[0] });
+            return res.status(200).json({
+                data: result[0]
+            });
         } catch (error) {
-            return res.status(400).send('Erro ao pesquisar clientes');
+            return res.status(500).send('Erro ao pesquisar clientes');
         }
     }
 }

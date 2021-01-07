@@ -7,6 +7,6 @@ const cliente = new ClienteController();
 router.post('/', cliente.post);
 router.put('/:id', cliente.put);
 router.delete('/:id', cliente.delete);
-router.get('/', cliente.buscarFiltro);
+router.get('/Search/:coluna/:text', cliente.buscarFiltro);
 
 export default router;
