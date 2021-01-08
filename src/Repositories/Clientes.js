@@ -13,6 +13,14 @@ class Clientes {
         return knex('cliente').delete().where('idCliente', '=', idCliente);
     }
 
+    findById(idCliente) {
+        return knex('cliente').select(
+            ["idCliente", "nome", "cpfCnpj", "ie",
+                "endereco", "numero", "complemento", "bairro", "cidade", "uf",
+                "email", "telefone"]
+        ).where('idCliente', '=', idCliente);
+    }
+
     buscarFiltro(sql) {
         return knex.raw(sql);
     }

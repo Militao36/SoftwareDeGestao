@@ -44,6 +44,12 @@ describe("Test api cliente", () => {
     expect(response.statusCode).toBe(204);
   })
 
+  test("[GET] Buscar cliente", async () => {
+    const response = await request(app)
+      .get("/Cliente/" + id)
+    expect(response.statusCode).toBe(200);
+  })
+
   test("[DELETE] Deletar cliente", async () => {
     const response = await request(app)
       .delete("/Cliente/" + id)

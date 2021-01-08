@@ -41,14 +41,24 @@ class ClienteController {
             await ClienteRepo.delete(Number(idCliente));
             return res.status(204).json({});
         } catch (error) {
-            return res.status(400).send('Erro ao deletar cliente');
+            return res.status(500).send('Erro ao deletar cliente');
+        }
+    }
+
+    async findById(req, res) {
+        try {
+            const idCliente = req.params.id;
+            const cliente = await ClienteRepo.findById(Number(idCliente));
+            return res.status(200).json({ cliente: cliente[0] });
+        } catch (error) {
+            return res.status(500).send('Erro ao deletar cliente');
         }
     }
 
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT nome,cpfCnpj,cidade FROM cliente ';
+            let sql = 'SELECT nome,cpfCnpj,cidade,idCliente FROM cliente ';
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;

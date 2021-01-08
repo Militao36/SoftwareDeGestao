@@ -38,7 +38,7 @@
           <div class="tab-content">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <br>
-              <form>
+              <form id="frmCliente1">
                 <div class="row">
                   <div class="col-md-12" style="display: none;">
                     <input type="text" id="idCliente" class="form-control">
@@ -78,7 +78,7 @@
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <br>
-              <form>
+              <form id="frmCliente2">
                 <div class="row">
                   <div class="col-md-8">
                     <input type="text" id="endereco" maxlength="100" class="form-control" placeholder="Endereço">
@@ -103,6 +103,7 @@
             </div>
           </div>
           <button class="btn btn-success" style="margin-top:10px" id="btnSalvar">Salvar</button>
+          <button class="btn btn-secondary" style="margin-top:10px" id="btnNovo">Novo</button>
           <button class="btn btn-danger" style="margin-top:10px" id="btnDeletar">Deletar</button>
         </div>
         <div class="col-md-6">
@@ -132,7 +133,9 @@
         </div>
       </div>
     </div>
-
+    <br><br>
+    <br><br>
+    <br><br>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"></script>

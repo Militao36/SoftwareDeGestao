@@ -64,6 +64,38 @@ function editarCliente() {
         })
 }
 
+function deletarCliente(idCliente) {
+    swal({
+        title: "Tem certeza que quer deletar este registro?",
+        text: "O registro será deletado definitivamente!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((isConfirm) => {
+        if (isConfirm) {
+            api.delete('/Cliente/' + idCliente)
+            limparForm()
+            $("#TableCliente tbody").empty()
+        }
+    })
+}
+
+function limparForm() {
+    document.getElementById('frmCliente1').reset()
+    document.getElementById('frmCliente2').reset()
+}
+
+function selectGridCliente(id = null) {
+    api.get('/Cliente/' + id)
+        .then((response) => {
+            const { cliente } = response.data
+            for (const key in cliente) {
+                const value = cliente[key]
+                document.getElementById(key).value = value
+            }
+        })
+}
+
 function invalidFormClient(data = []) {
     data.forEach(v => {
         const key = Object.keys(v)
@@ -99,7 +131,7 @@ function Grid(coluna, text) {
             $("#TableCliente tbody").empty()
             for (const item of data) {
                 $("#TableCliente tbody").append(`
-                    <tr> 
+                    <tr onclick="selectGridCliente(${item.idCliente})"> 
                         <td>${item.nome}</td> 
                         <td>${item.cpfCnpj || ''}</td>
                         <td>${item.cidade || ''}</td>
@@ -118,3 +150,14 @@ document.getElementById('txtPesquisa').addEventListener('keyup', (event) => {
 
     $("#TableCliente tbody").empty()
 });
+
+document.getElementById('btnNovo').addEventListener('click', (e) => {
+    e.preventDefault()
+    limparForm()
+})
+
+document.getElementById('btnDeletar').addEventListener('click', (e) => {
+    e.preventDefault()
+    const id = document.getElementById('idCliente').value
+    deletarCliente(Number(id))
+})
