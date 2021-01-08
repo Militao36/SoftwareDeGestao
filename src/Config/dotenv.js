@@ -1,6 +1,12 @@
 import { config } from 'dotenv';
+import { resolve } from 'path'
 
-config();
+config({
+    path: process.env.TEST ?
+        resolve(__dirname, '..', '..', '.env.test') :
+        resolve(__dirname, '..', '..', '.env')
+});
+
 
 const dotenv = {
     // .env

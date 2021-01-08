@@ -3,7 +3,7 @@ import ValidatorFornecedor from '../../Validators/Fornecedor';
 import { DateTime } from 'luxon';
 
 class HandleFornecedor {
-    Handler = async (fornecedor, idEmpresa) => {
+    async Handler(fornecedor, idEmpresa) {
         const Fornecedor = { ...fornecedor, idEmpresa, updateAt: DateTime.local().toSQLDate() };
 
         const validacoes = ValidatorFornecedor(Fornecedor);

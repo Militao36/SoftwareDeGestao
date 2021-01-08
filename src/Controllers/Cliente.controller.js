@@ -37,12 +37,9 @@ class ClienteController {
 
     async delete(req, res) {
         try {
-            if (Number(req.params.idEmpresa) != req.idEmpresa) {
-                return res.status(401).send('Você está tentando deletar dados que não são seus.')
-            }
             const idCliente = req.params.id;
             await ClienteRepo.delete(Number(idCliente));
-            return res.status(200).json({});
+            return res.status(204).json({});
         } catch (error) {
             return res.status(400).send('Erro ao deletar cliente');
         }
