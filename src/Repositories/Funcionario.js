@@ -13,6 +13,17 @@ class Funcionario {
         return knex('funcionario').delete().where('idFuncionario', '=', idFuncionario);
     }
 
+    findById(idFuncionario) {
+        return knex('funcionario').select(
+            ["idFuncionario", "nome", "cpf", "rg", 
+            "logradouro", "numero", "complemento", 
+            "bairro", "cidade", "uf", "cep", "telefone", 
+            "celular", "email", "observacao", "salario", 
+            "dataAdmissao", "comissao", "diaPagamento", "dataDemissao"]
+        ).where('idFuncionario', '=', idFuncionario);
+    }
+
+
     buscarFiltro(sql) {
         return knex.raw(sql);
     }

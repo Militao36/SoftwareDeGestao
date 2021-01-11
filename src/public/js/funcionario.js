@@ -1,21 +1,22 @@
 $('#telefone').mask('(00) 00000-0000');
 $('#celular').mask('(00) 00000-0000');
 $('#cep').mask('00000-000');
+$('#cpf').mask('000.000.000-00');
+$('#dataAdmissao').mask('00/00/0000');
+$('#dataDemissao').mask('00/00/0000');
+$('#salario').mask('000.000.000.000.000,00', {
+    reverse: true,
+});
 
-const options = {
-    onKeyPress: function (cpf, ev, el, op) {
-        var masks = ['000.000.000-000', '00.000.000/0000-00'];
-        $('#cnpjCpf').mask((cpf.length > 14) ? masks[1] : masks[0], op);
-    }
-}
 
-$('#cnpjCpf').length > 11 ? $('#cnpjCpf').mask('00.000.000/0000-00', options) : $('#cnpjCpf').mask('000.000.000-00#', options);
 
 document.getElementById('btnSalvar').addEventListener('click', (e) => {
     e.preventDefault()
+
     const data = {
-        razaoSocial: document.getElementById('razaoSocial').value,
-        nomeFantasia: document.getElementById('nomeFantasia').value,
+        nome: document.getElementById('nome').value,
+        cpf: document.getElementById('cpf').value,
+        rg: document.getElementById('rg').value,
         logradouro: document.getElementById('logradouro').value,
         numero: document.getElementById('numero').value,
         complemento: document.getElementById('complemento').value,
@@ -25,13 +26,22 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
         uf: document.getElementById('uf').value,
         telefone: document.getElementById('telefone').value,
         celular: document.getElementById('celular').value,
-        cnpjCpf: document.getElementById('cnpjCpf').value,
-        ie: document.getElementById('ie').value,
         email: document.getElementById('email').value,
+        observacao: document.getElementById('observacao').value,
+        salario: document.getElementById('salario').value,
+        dataAdmissao: document.getElementById('dataAdmissao').value,
+        comissao: document.getElementById('comissao').value,
+        diaPagamento: document.getElementById('diaPagamento').value,
+        dataDemissao: document.getElementById('dataDemissao').value,
     }
 
+    data.salario = data.salario.replace('.', '').replace(',', '.')
+    data.dataAdmissao = dateTransformHttp(data.dataAdmissao)
+    data.comissao = data.comissao != "" ? 0 : Number(data.comissao.replace('.', '').replace(',', '.'))
+    data.dataDemissao = dateTransformHttp(data.dataDemissao)
+
     removeInvalidForm()
-    const id = document.getElementById('idFornecedor').value
+    const id = document.getElementById('idFuncionario').value
     if (id === '')
         salvarFornecedor(data)
     else
@@ -40,11 +50,10 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
 })
 
 function salvarFornecedor(data) {
-
-    api.post('/Fornecedor', data)
+    api.post('/Funcionario', data)
         .then((response) => {
-            document.getElementById('idFornecedor').value = response.data.id
-            swal("Fornecedor salvo com sucesso.", "", "success");
+            document.getElementById('idFuncionario').value = response.data.id
+            swal("Funcionario salvo com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
                 return invalidForm(error.response.data.validacoes)
@@ -54,9 +63,9 @@ function salvarFornecedor(data) {
 }
 
 function atualizarFornecedor(data, id) {
-    api.put('/Fornecedor/' + id, data)
+    api.put('/Funcionario/' + id, data)
         .then((response) => {
-            swal("Fornecedor salvo com sucesso.", "", "success");
+            swal("Funcionario atualizado com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
                 return invalidForm(error.response.data.validacoes)
@@ -90,7 +99,7 @@ function removeInvalidForm() {
     }
 }
 
-function deletarFornecedor(idFornecedor) {
+function deletarFornecedor(idFuncionario) {
     swal({
         title: "Tem certeza que quer deletar este registro?",
         text: "O registro será deletado definitivamente!",
@@ -99,33 +108,31 @@ function deletarFornecedor(idFornecedor) {
         dangerMode: true,
     }).then((isConfirm) => {
         if (isConfirm) {
-            api.delete('/Fornecedor/' + idFornecedor)
+            api.delete('/Funcionario/' + idFuncionario)
             limparForm()
-            $("#TableFornecedor tbody").empty()
         }
     })
 }
 
 function limparForm() {
-    document.getElementById('frmFornecedor1').reset()
-    document.getElementById('frmFornecedor2').reset()
-    $("#TableFornecedor tbody").empty()
-
+    document.getElementById('frmFuncionario1').reset()
+    document.getElementById('frmFuncionario2').reset()
+    $("#TableFuncionario tbody").empty()
 }
 
 function Grid(coluna, text) {
     if (!text)
         text = ''
 
-    axios.get(`/Fornecedor/Search/${coluna}/${text}`)
+    axios.get(`/Funcionario/Search/${coluna}/${text}`)
         .then(async (response) => {
             const { data } = response.data;
-            $("#TableFornecedor tbody").empty()
+            $("#TableFuncionario tbody").empty()
             for (const item of data) {
-                $("#TableFornecedor tbody").append(`
-                    <tr onclick="selectGridFornecedor(${item.idFornecedor})"> 
-                        <td>${item.razaoSocial}</td> 
-                        <td>${item.cnpjCpf || ''}</td>
+                $("#TableFuncionario tbody").append(`
+                    <tr onclick="selectGridFuncionario(${item.idFuncionario})"> 
+                        <td>${item.nome}</td> 
+                        <td>${item.cpf || ''}</td>
                         <td>${item.cidade || ''}</td>
                     </tr>
                 `);
@@ -133,13 +140,17 @@ function Grid(coluna, text) {
         })
 }
 
-function selectGridFornecedor(id = null) {
-    api.get('/Fornecedor/' + id)
+function selectGridFuncionario(id = null) {
+    api.get('/Funcionario/' + id)
         .then((response) => {
-            const { fornecedor } = response.data
-            for (const key in fornecedor) {
-                const value = fornecedor[key]
-                document.getElementById(key).value = value
+            const { funcionario } = response.data
+            for (const key in funcionario) {
+                const value = funcionario[key]
+                if (key === 'dataAdmissao' || key === 'dataDemissao') {
+                    document.getElementById(key).value = dateTransformDateValid(value)
+                    continue;
+                }
+                document.getElementById(key).value = valueModify(value)
             }
         })
 }
@@ -151,7 +162,7 @@ document.getElementById('txtPesquisa').addEventListener('keyup', (event) => {
         Grid(coluna, encodeURIComponent(texto));
     }
 
-    $("#TableFornecedor tbody").empty()
+    $("#TableFuncionario tbody").empty()
 });
 
 document.getElementById('btnNovo').addEventListener('click', (e) => {
@@ -161,7 +172,7 @@ document.getElementById('btnNovo').addEventListener('click', (e) => {
 
 document.getElementById('btnDeletar').addEventListener('click', (e) => {
     e.preventDefault()
-    const id = document.getElementById('idFornecedor').value
+    const id = document.getElementById('idFuncionario').value
     if (id)
         deletarFornecedor(Number(id))
 })

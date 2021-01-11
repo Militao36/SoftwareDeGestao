@@ -14,8 +14,8 @@ class App {
         this.express.set('views', path.join(__dirname, 'views'));
         this.express.set('view engine', 'ejs');
         this.express.use(express.static(path.join(__dirname, 'public')));
-        this.express.use(Auth)
         this.express.use(express.json());
+        this.express.use(Auth)
     }
 
     routes() {

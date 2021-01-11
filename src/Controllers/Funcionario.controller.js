@@ -4,7 +4,7 @@ import FuncionarioHandlerUpdate from '../Handlers/Funcionario/FuncionaUpdate';
 
 import FuncionarioRepo from '../Repositories/Funcionario';
 
-class ForncedorController {
+class FuncionarioController {
     async post(req, res) {
         const { nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
             telefone, celular, email, observacao, salario, dataAdmissao, comissao, diaPagamento, dataDemissao } = req.body;
@@ -15,60 +15,69 @@ class ForncedorController {
             telefone, celular, email, observacao, salario, dataAdmissao, comissao, diaPagamento, dataDemissao,
         }, idEmpresa);
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
-        return res.status(203).json({ id: result });
+        return res.status(201).json({ id: result });
     }
 
     async put(req, res) {
         const { nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
-            telefone, celular, email, observacao, salario, dataAdmissao, comissao, diaPagamento, dataDemissao, idFuncionario } = req.body;
+            telefone, celular, email, observacao, salario, dataAdmissao, comissao, diaPagamento, dataDemissao } = req.body;
 
         const idEmpresa = req.idEmpresa;
 
         const result = await FuncionarioHandlerUpdate.Handler({
             nome, cpf, rg, logradouro, numero, complemento, bairro, cidade, uf, cep,
             telefone, celular, email, observacao, salario, dataAdmissao, comissao,
-            diaPagamento, dataDemissao, idFuncionario,
+            diaPagamento, dataDemissao, idFuncionario: req.params.id,
         }, idEmpresa);
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
-        return res.status(200).json({});
+        return res.status(204).json({});
     }
 
     async delete(req, res) {
         try {
-            const idFornecedor = req.params.id;
-            await FuncionarioRepo.delete(Number(idFornecedor));
-            return res.status(200).json({});
+            const idFuncionario = req.params.id;
+            await FuncionarioRepo.delete(Number(idFuncionario));
+            return res.status(204).json({});
         } catch (error) {
-            return res.status(400).send('Erro ao deletar fornecedor');
+            return res.status(400).send('Erro ao deletar funcionario');
+        }
+    }
+
+    async findById(req, res) {
+        try {
+            const idFuncionario = req.params.id;
+            const funcionario = await FuncionarioRepo.findById(Number(idFuncionario));
+            return res.status(200).json({ funcionario: funcionario[0] });
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send('Erro ao pesquisar funcionario');
         }
     }
 
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT * FROM fornecedor ';
-            const query = req.query;
-            const keys = Object.keys(query);
-            for (const item of keys) {
-                if (item.startsWith('MENOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} < '${query[item]}'`;
-                } else if (item.startsWith('MAIOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} > '${query[item]}'`;
-                } else {
-                    sql += `WHERE ${item} = '${query[item]}'`;
-                }
+            let sql = 'SELECT nome,cpf,cidade,idFuncionario FROM funcionario ';
+
+            if (req.params.text !== 'null') {
+                sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;
+                sql += ` and idEmpresa = ${idEmpresa}`;
+            } else {
+                sql += `where idEmpresa = ${idEmpresa}`;
             }
-            sql += ` and idEmpresa = ${idEmpresa}`;
+            sql += ' LIMIT 10'
             const result = await FuncionarioRepo.buscarFiltro(sql);
-            return res.status(200).json(result[0]);
+            return res.status(200).json({
+                data: result[0]
+            });
         } catch (error) {
-            return res.status(400).send('Erro ao pesquisar funcionario');
+            return res.status(500).send('Erro ao pesquisar clientes');
         }
     }
 }
 
-export default ForncedorController;
+export default FuncionarioController;

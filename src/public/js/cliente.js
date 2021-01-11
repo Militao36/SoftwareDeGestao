@@ -39,7 +39,7 @@ function salvarCliente() {
             swal("Cliente salvo com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
-                return invalidFormClient(error.response.data.validacoes)
+                return invalidForm(error.response.data.validacoes)
 
             swal("Ocorreu um erro, entre em contato com a empresa", "", "warning");
         })
@@ -64,7 +64,7 @@ function editarCliente() {
             swal("Cliente editado com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
-                return invalidFormClient(error.response.data.validacoes)
+                return invalidForm(error.response.data.validacoes)
 
             swal("Ocorreu um erro, entre em contato com a empresa", "", "warning");
         })
@@ -102,7 +102,7 @@ function selectGridCliente(id = null) {
         })
 }
 
-function invalidFormClient(data = []) {
+function invalidForm(data = []) {
     data.forEach(v => {
         const key = Object.keys(v)
         const value = Object.values(v)
