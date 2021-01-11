@@ -13,6 +13,14 @@ class Fornecedor {
         return knex('fornecedor').delete().where('idFornecedor', '=', idFornecedor);
     }
 
+    findById(idFornecedor) {
+        return knex('fornecedor').select(
+            ["idFornecedor", "razaoSocial", "nomeFantasia", "logradouro",
+                "numero", "complemento", "bairro", "cep", "cidade", "uf",
+                "telefone", "celular", "cnpjCpf", "ie", "email"]
+        ).where('idFornecedor', '=', idFornecedor);
+    }
+
     buscarFiltro(sql) {
         return knex.raw(sql);
     }

@@ -12,7 +12,7 @@ class ForncedorController {
             complemento, bairro, cep, cidade, uf, telefone, celular, cnpjCpf, ie, email,
         }, idEmpresa);
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
         return res.status(201).json({ id: result });
     }
@@ -29,7 +29,7 @@ class ForncedorController {
             cnpjCpf, ie, email, idFornecedor: req.params.id,
         }, idEmpresa);
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
         return res.status(204).json({});
     }
@@ -40,30 +40,39 @@ class ForncedorController {
             await FornecedorRepo.delete(Number(idFornecedor));
             return res.status(204).json({});
         } catch (error) {
-            return res.status(400).send('Erro ao deletar fornecedor');
+            return res.status(500).send('Erro ao deletar fornecedor');
+        }
+    }
+
+    async findById(req, res) {
+        try {
+            const idFornecedor = req.params.id;
+            const fornecedor = await FornecedorRepo.findById(Number(idFornecedor));
+            return res.status(200).json({ fornecedor: fornecedor[0] });
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send('Erro ao pesquisar fornecedor');
         }
     }
 
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT * FROM fornecedor ';
-            const query = req.query;
-            const keys = Object.keys(query);
-            for (const item of keys) {
-                if (item.startsWith('MENOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} < '${query[item]}'`;
-                } else if (item.startsWith('MAIOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} > '${query[item]}'`;
-                } else {
-                    sql += `WHERE ${item} = '${query[item]}'`;
-                }
+            let sql = 'SELECT razaoSocial,cnpjCpf,cidade,idFornecedor FROM fornecedor ';
+
+            if (req.params.text !== 'null') {
+                sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;
+                sql += ` and idEmpresa = ${idEmpresa}`;
+            } else {
+                sql += `where idEmpresa = ${idEmpresa}`;
             }
-            sql += ` and idEmpresa = ${idEmpresa}`;
+            sql += ' LIMIT 10'
             const result = await FornecedorRepo.buscarFiltro(sql);
-            return res.status(200).json(result[0]);
+            return res.status(200).json({
+                data: result[0]
+            });
         } catch (error) {
-            return res.status(400).send('Erro ao pesquisar fornecedors');
+            return res.status(500).send('Erro ao pesquisar clientes');
         }
     }
 }

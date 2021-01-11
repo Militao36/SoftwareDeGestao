@@ -51,7 +51,7 @@ class ClienteController {
             const cliente = await ClienteRepo.findById(Number(idCliente));
             return res.status(200).json({ cliente: cliente[0] });
         } catch (error) {
-            return res.status(500).send('Erro ao deletar cliente');
+            return res.status(500).send('Erro ao pesquisar cliente');
         }
     }
 

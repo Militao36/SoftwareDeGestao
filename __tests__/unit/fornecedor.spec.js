@@ -24,11 +24,16 @@ describe("Test api fornecedor", () => {
     }
   });
 
+  test("[GET] Pagina de fornecedor", async () => {
+    const response = await request(app)
+      .get("/Fornecedor")
+    expect(response.statusCode).toBe(200);
+  });
+
   test("[POST] Salvar novo Fornecedor", async () => {
     const response = await request(app)
       .post("/Fornecedor")
       .send(data)
-    console.log(response)
     id = response.body.id
     expect(typeof (response.body.id)).toBe('number');
     expect(response.statusCode).toBe(201);

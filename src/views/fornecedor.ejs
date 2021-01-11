@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/fornecedor.css">
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+  <%- include('components/navbar'); %>
+    <br>
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Fornecedor</li>
+        </ol>
+      </nav>
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="nav nav-tabs" id="tab-fornecedor" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Dados</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Endereço</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <br>
+              <form id="frmFornecedor1">
+                <div class="row">
+                  <div class="col-md-12" style="display: none;">
+                    <input type="text" id="idFornecedor" class="form-control">
+                  </div>
+                  <div class="col-md-12">
+                    <input type="text" id="razaoSocial" maxlength="100" class="form-control" placeholder="Razão sócial">
+                    <div id="IrazaoSocial" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <input type="text" maxlength="18" id="nomeFantasia" class="form-control"
+                      placeholder="Nome Fantasia">
+                    <div id="InomeFantasia" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" id="cnpjCpf" maxlength="25" class="form-control" placeholder="Cnpj/Cpf">
+                    <div id="IcnpjCpf" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" id="ie" maxlength="25" class="form-control" placeholder="IE">
+                    <div id="Iie" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" maxlength="100" id="telefone" class="form-control" placeholder="Telefone">
+                    <div id="Itelefone" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" maxlength="11" id="celular" class="form-control" placeholder="Celular">
+                    <div id="Icelular" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <input type="email" maxlength="11" id="email" class="form-control" placeholder="E-mail">
+                    <div id="Iemail" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <br>
+              <form id="frmFornecedor2">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text" id="logradouro" maxlength="25" class="form-control" placeholder="Logradouro">
+                    <div id="Ilogradouro" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" maxlength="11" id="numero" class="form-control" placeholder="Numero">
+                    <div id="Inumero" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <input type="text" maxlength="11" id="complemento" class="form-control" placeholder="Complemento">
+                    <div id="Icomplemento" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <input type="text" maxlength="11" id="bairro" class="form-control" placeholder="Bairro">
+                    <div id="Ibairro" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" maxlength="11" id="cep" class="form-control" placeholder="Cep">
+                    <div id="Icep" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <input type="text" maxlength="11" id="cidade" class="form-control" placeholder="Cidade">
+                    <div id="Icidade" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" maxlength="11" id="uf" class="form-control" placeholder="UF">
+                    <div id="Iuf" style="display: none;">
+                      Looks good!
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <button class="btn btn-success" style="margin-top:10px" id="btnSalvar">Salvar</button>
+          <button class="btn btn-secondary" style="margin-top:10px" id="btnNovo">Novo</button>
+          <button class="btn btn-danger" style="margin-top:10px" id="btnDeletar">Deletar</button>
+        </div>
+        <div class="col-md-6">
+          <div class="pesquisa">
+            <input type="text" id="txtPesquisa" class="form-control" placeholder="Pesquisar"
+              style="margin-bottom: 10px;">
+            <select class="form-control" id="selectColuna">
+              <option value="razaoSocial">Razão Social</option>
+              <option value="cnpjCpf">Cpf/Cnpj</option>
+              <option value="cidade">Cidade</option>
+              <option value="email">E-mail</option>
+              <option value="telefone">Telefone</option>
+            </select>
+          </div>
+          <table class="table table-dark" id="TableFornecedor">
+            <thead>
+              <tr>
+                <th scope="col-md">Nome</th>
+                <th scope="col-md">Cpf/Cnpj</th>
+                <th scope="col-md">Cidade</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+    <script src="js/fornecedor.js"></script>
+</body>
+
+</html>

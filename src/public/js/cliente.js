@@ -38,7 +38,10 @@ function salvarCliente() {
             document.getElementById('idCliente').value = response.data.id
             swal("Cliente salvo com sucesso.", "", "success");
         }).catch((error) => {
-            invalidFormClient(error.response.data.validacoes)
+            if (error.response.data.validacoes)
+                return invalidFormClient(error.response.data.validacoes)
+
+            swal("Ocorreu um erro, entre em contato com a empresa", "", "warning");
         })
 }
 
@@ -60,7 +63,10 @@ function editarCliente() {
         .then((response) => {
             swal("Cliente editado com sucesso.", "", "success");
         }).catch((error) => {
-            console.log(error)
+            if (error.response.data.validacoes)
+                return invalidFormClient(error.response.data.validacoes)
+
+            swal("Ocorreu um erro, entre em contato com a empresa", "", "warning");
         })
 }
 

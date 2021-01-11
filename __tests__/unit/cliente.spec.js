@@ -24,7 +24,7 @@ describe("Test api cliente", () => {
 
   test("[GET] Pagina de cliente", async () => {
     const response = await request(app)
-      .get("/")
+      .get("/Cliente")
     expect(response.statusCode).toBe(200);
   });
 
