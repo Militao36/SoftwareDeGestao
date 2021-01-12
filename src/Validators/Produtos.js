@@ -5,7 +5,6 @@ export default async (produto) => {
     const erros = [];
 
     const data = await ProdutosRepo.findByCodBarras(produto.codBarras);
-
     if (data.length !== 0 && (data[0].uuid !== produto.uuid)) {
         erros.push({
             codBarras: 'Esté código de barras já está vinculado a outro produto.'

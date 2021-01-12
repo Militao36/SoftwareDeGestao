@@ -8,7 +8,7 @@ const produto = new ProdutoController();
 router.get('/', async (req, res) => {
     return res.render('produto', {
         title: 'BMS Optica',
-        forncedor: (await FornecedorRepo.buscarFiltro('select razaoSocial,idFornecedor from fornecedor'))[0]
+        forncedor: (await FornecedorRepo.buscarFiltro('select razaoSocial,uuid from fornecedor'))[0]
     })
 });
 router.post('/', produto.post);

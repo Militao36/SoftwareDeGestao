@@ -44,7 +44,7 @@ describe("Test api Produto", () => {
             .post("/Produto")
             .send(data)
         id = response.body.id
-        expect(typeof (response.body.id)).toBe('number');
+        expect(typeof (response.body.id)).toBe('string');
         expect(response.statusCode).toBe(201);
     })
 
@@ -55,9 +55,9 @@ describe("Test api Produto", () => {
         expect(response.statusCode).toBe(204);
     })
 
-    // test("[DELETE] Deletar Produto", async () => {
-    //     const response = await request(app)
-    //         .delete("/Produto/" + id)
-    //     expect(response.statusCode).toBe(204);
-    // })
+    test("[DELETE] Deletar Produto", async () => {
+        const response = await request(app)
+            .delete("/Produto/" + id)
+        expect(response.statusCode).toBe(204);
+    })
 });

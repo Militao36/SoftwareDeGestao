@@ -17,7 +17,7 @@ class Produtos {
         return knex('produto').select(
             ["uuid", "codBarras", "nomeProduto", "valor", "estoque",
                 "estoqueMin", "idFornecedor"]
-        ).where('uuid', '=', uuid);
+        ).where('uuid', '=', uuid).first()
     }
 
     findByCodBarras(codBarras) {

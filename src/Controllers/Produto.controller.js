@@ -1,5 +1,6 @@
 import ProdutoHandlerSave from '../Handlers/Produto/ProdutoSave';
 import ProdutoHandlerUpdate from '../Handlers/Produto/ProdutoUpdate';
+import FornecedorRepo from '../Repositories/Fornecedor';
 
 import ProdutoRepo from '../Repositories/Produtos';
 
@@ -22,7 +23,7 @@ class ProdutoController {
         const idEmpresa = req.idEmpresa;
 
         const result = await ProdutoHandlerUpdate.Handler({
-            codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor, idProduto: Number(req.params.id),
+            codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor, uuid: req.params.id,
         }, idEmpresa);
         if (Array.isArray(result)) {
             return res.status(422).json({ validacoes: result });
@@ -32,8 +33,8 @@ class ProdutoController {
 
     async delete(req, res) {
         try {
-            const idProduto = req.params.id;
-            await ProdutoRepo.delete(Number(idProduto));
+            const uuid = req.params.id;
+            await ProdutoRepo.delete(uuid);
             return res.status(204).json({});
         } catch (error) {
             return res.status(500).send('Erro ao deletar produto');
@@ -42,10 +43,17 @@ class ProdutoController {
 
     async findById(req, res) {
         try {
-            const idProduto = req.params.id;
-            const produto = await ProdutoRepo.findById(Number(idProduto));
-            return res.status(200).json({ produto: produto[0] });
+            const uuid = req.params.id;
+            const produto = await ProdutoRepo.findById(uuid);
+            const fornecedor = await FornecedorRepo.findByIdFornecedor(produto.idFornecedor)
+            return res.status(200).json({
+                produto: {
+                    ...produto,
+                    idFornecedor: fornecedor.uuid || null
+                }
+            });
         } catch (error) {
+            console.log(error)
             return res.status(500).send('Erro ao pesquisar produtos');
         }
     }
@@ -53,7 +61,7 @@ class ProdutoController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT nomeProduto,valor,estoque,idProduto FROM produto ';
+            let sql = 'SELECT nomeProduto,valor,estoque,uuid FROM produto ';
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;

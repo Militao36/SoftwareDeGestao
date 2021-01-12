@@ -21,6 +21,18 @@ class Fornecedor {
         ).where('uuid', '=', uuid);
     }
 
+    findByIdFornecedor(idFornecedor) {
+        return knex('fornecedor').select(
+            ["idFornecedor", "uuid"]
+        ).where('idFornecedor', '=', idFornecedor).first();
+    }
+
+    findByUUID(uuid) {
+        return knex('fornecedor').select(
+            ["uuid", "idFornecedor"]
+        ).where('uuid', '=', uuid).first();
+    }
+
     buscarFiltro(sql) {
         return knex.raw(sql);
     }

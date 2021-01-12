@@ -41,7 +41,7 @@
               <form id="frmProduto1">
                 <div class="row">
                   <div class="col-md-12" style="display: none;">
-                    <input type="text" id="idProduto" class="form-control">
+                    <input type="text" id="uuid" class="form-control">
                   </div>
                   <div class="col-md-12">
                     <input type="text" maxlength="150" id="codBarras" class="form-control" placeholder="Cod. Barras">
@@ -65,7 +65,7 @@
                     <select class="form-control" id="idFornecedor">
                       <option value='null'>--- Selecione o Fornecedor ---</option>
                       <% for(let i=0; i < forncedor.length;i++){ %>
-                        <option value="<%= forncedor[i].idFornecedor %>">
+                        <option value="<%= forncedor[i].uuid %>">
                           <%= forncedor[i].razaoSocial %>
                         </option>
                         <% }%>

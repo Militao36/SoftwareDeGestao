@@ -1,10 +1,17 @@
 import ProdutoRepo from '../../Repositories/Produtos';
 import ValidatorProduto from '../../Validators/Produtos';
+import FornecedorRepo from '../../Repositories/Fornecedor';
 import { DateTime } from 'luxon';
 
 class HandleProduto {
     Handler = async (produto, idEmpresa) => {
-        const Produto = { ...produto, idEmpresa, updateAt: DateTime.local().toSQLDate() };
+        const fornecdor = await FornecedorRepo.findByUUID(produto.idFornecedor)
+
+        const Produto = {
+            ...produto, idEmpresa,
+            updateAt: DateTime.local().toSQLDate(),
+            idFornecedor: fornecdor.idFornecedor || null
+        };
 
         const validacoes = await ValidatorProduto(Produto);
         if (validacoes.length > 0) {

@@ -18,7 +18,7 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
     data.valor = data.valor.replace('.', '').replace(',', '.')
 
     removeInvalidForm()
-    const id = document.getElementById('idProduto').value
+    const id = document.getElementById('uuid').value
     if (id === '')
         salvarProduto(data)
     else
@@ -29,7 +29,7 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
 function salvarProduto(data) {
     api.post('/Produto', data)
         .then((response) => {
-            document.getElementById('idProduto').value = response.data.id
+            document.getElementById('uuid').value = response.data.id
             swal("Produto salvo com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
@@ -76,7 +76,7 @@ function removeInvalidForm() {
     }
 }
 
-function deletarProduto(idProduto) {
+function deletarProduto(uuid) {
     swal({
         title: "Tem certeza que quer deletar este registro?",
         text: "O registro será deletado definitivamente!",
@@ -85,7 +85,7 @@ function deletarProduto(idProduto) {
         dangerMode: true,
     }).then((isConfirm) => {
         if (isConfirm) {
-            api.delete('/Produto/' + idProduto)
+            api.delete('/Produto/' + uuid)
             limparForm()
         }
     })
@@ -108,7 +108,7 @@ function Grid(coluna, text) {
             $("#TableProduto tbody").empty()
             for (const item of data) {
                 $("#TableProduto tbody").append(`
-                    <tr onclick="selectGridProduto(${item.idProduto})"> 
+                    <tr onclick="selectGridProduto('${item.uuid}')"> 
                         <td>${item.nomeProduto}</td> 
                         <td>${item.valor || 0}</td>
                         <td>${item.estoque || 0}</td>
@@ -150,7 +150,7 @@ document.getElementById('btnNovo').addEventListener('click', (e) => {
 
 document.getElementById('btnDeletar').addEventListener('click', (e) => {
     e.preventDefault()
-    const id = document.getElementById('idProduto').value
-    if (id)
-        deletarProduto(Number(id))
+    const uuid = document.getElementById('uuid').value
+    if (uuid)
+        deletarProduto(uuid)
 })
