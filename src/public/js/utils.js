@@ -21,3 +21,29 @@ function valueModify(valor) {
 
     return valor
 }
+
+
+function invalidForm(data = []) {
+    data.forEach(v => {
+        const key = Object.keys(v)
+        const value = Object.values(v)
+        document.getElementById(key[0]).classList.add('is-invalid')
+        const item = document.getElementById(`I${key[0]}`)
+        item.style.display = 'block'
+        item.classList.add("invalid-feedback");
+        item.innerHTML = value.join('%')
+    })
+}
+
+function removeInvalidForm() {
+    const elements = document.getElementsByClassName('invalid-feedback')
+    if (elements.length == 0)
+        return
+
+    for (let index = 0; index <= elements.length; index++) {
+        const input = elements[0].parentElement.getElementsByTagName('input')[0]
+        elements[0].style.display = 'none'
+        input.classList.remove('is-invalid')
+        elements[0].classList.remove('invalid-feedback')
+    }
+}
