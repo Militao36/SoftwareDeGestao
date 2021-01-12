@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 
 class HandleUsuario {
     Handler = async (user, idEmpresa) => {
-        const usuario = { ...user, idEmpresa, ativo: false, createAt: DateTime.local().toSQLDate() };
+        const usuario = { ...user, idEmpresa, createAt: DateTime.local().toSQLDate() };
 
         const validacoes = ValidatorUser(usuario);
         if (validacoes.length > 0) {

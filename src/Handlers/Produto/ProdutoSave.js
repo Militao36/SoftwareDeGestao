@@ -4,9 +4,9 @@ import { DateTime } from 'luxon';
 
 class HandleProduto {
     Handler = async (produto, idEmpresa) => {
-        const Produto = { ...produto, idEmpresa, ativo: false, createAt: DateTime.local().toSQLDate() };
+        const Produto = { ...produto, idEmpresa, createAt: DateTime.local().toSQLDate() };
 
-        const validacoes = ValidatorProduto(Produto);
+        const validacoes = await ValidatorProduto(Produto);
         if (validacoes.length > 0) {
             return validacoes;
         }

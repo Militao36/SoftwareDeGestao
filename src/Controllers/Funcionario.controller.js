@@ -53,7 +53,6 @@ class FuncionarioController {
             const funcionario = await FuncionarioRepo.findById(Number(idFuncionario));
             return res.status(200).json({ funcionario: funcionario[0] });
         } catch (error) {
-            console.log(error)
             return res.status(500).send('Erro ao pesquisar funcionario');
         }
     }

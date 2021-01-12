@@ -9,7 +9,7 @@ class UsuarioController {
         const { email, senha } = req.body;
         const idEmpresa = req.idEmpresa;
 
-        const result = await UsuarioHandlerSave.Handler({ email, senha, ativo: false }, idEmpresa);
+        const result = await UsuarioHandlerSave.Handler({ email, senha }, idEmpresa);
         if (Array.isArray(result)) {
             return res.json({ validacoes: result });
         }
