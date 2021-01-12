@@ -1,5 +1,5 @@
-import ForncedorHandlerSave from '../Handlers/Forncedor/ForncedorSave.js';
-import ForncedorHandlerUpdate from '../Handlers/Forncedor/ForncedorUpdate';
+import FornecedorHandlerSave from '../Handlers/Fornecedor/ForncedorSave.js';
+import FornecedorHandlerUpdate from '../Handlers/Fornecedor/ForncedorUpdate';
 import FornecedorRepo from '../Repositories/Fornecedor';
 
 class ForncedorController {
@@ -7,7 +7,7 @@ class ForncedorController {
         const { razaoSocial, nomeFantasia, logradouro, numero, complemento, bairro, cep, cidade, uf, telefone, celular, cnpjCpf, ie, email } = req.body;
         const idEmpresa = req.idEmpresa;
 
-        const result = await ForncedorHandlerSave.Handler({
+        const result = await FornecedorHandlerSave.Handler({
             razaoSocial, nomeFantasia, logradouro, numero,
             complemento, bairro, cep, cidade, uf, telefone, celular, cnpjCpf, ie, email,
         }, idEmpresa);
@@ -23,7 +23,7 @@ class ForncedorController {
 
         const idEmpresa = req.idEmpresa;
 
-        const result = await ForncedorHandlerUpdate.Handler({
+        const result = await FornecedorHandlerUpdate.Handler({
             razaoSocial, nomeFantasia, logradouro, numero,
             complemento, bairro, cep, cidade, uf, telefone, celular,
             cnpjCpf, ie, email, uuid: req.params.id,

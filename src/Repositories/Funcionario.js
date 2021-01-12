@@ -6,21 +6,21 @@ class Funcionario {
     }
 
     update(funcionario) {
-        return knex('funcionario').update(funcionario).where('idFuncionario', '=', funcionario.idFuncionario);
+        return knex('funcionario').update(funcionario).where('uuid', '=', funcionario.uuid);
     }
 
-    delete(idFuncionario) {
-        return knex('funcionario').delete().where('idFuncionario', '=', idFuncionario);
+    delete(uuid) {
+        return knex('funcionario').delete().where('uuid', '=', uuid);
     }
 
-    findById(idFuncionario) {
+    findById(uuid) {
         return knex('funcionario').select(
-            ["idFuncionario", "nome", "cpf", "rg", 
+            ["uuid", "nome", "cpf", "rg", 
             "logradouro", "numero", "complemento", 
             "bairro", "cidade", "uf", "cep", "telefone", 
             "celular", "email", "observacao", "salario", 
             "dataAdmissao", "comissao", "diaPagamento", "dataDemissao"]
-        ).where('idFuncionario', '=', idFuncionario);
+        ).where('uuid', '=', uuid);
     }
 
 

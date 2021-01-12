@@ -41,18 +41,18 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
     data.dataDemissao = dateTransformHttp(data.dataDemissao)
 
     removeInvalidForm()
-    const id = document.getElementById('idFuncionario').value
-    if (id === '')
+    const uuid = document.getElementById('uuid').value
+    if (uuid === '')
         salvarFornecedor(data)
     else
-        atualizarFornecedor(data, id)
+        atualizarFornecedor(data, uuid)
 
 })
 
 function salvarFornecedor(data) {
     api.post('/Funcionario', data)
         .then((response) => {
-            document.getElementById('idFuncionario').value = response.data.id
+            document.getElementById('uuid').value = response.data.id
             swal("Funcionario salvo com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
@@ -99,7 +99,7 @@ function removeInvalidForm() {
     }
 }
 
-function deletarFornecedor(idFuncionario) {
+function deletarFornecedor(uuid) {
     swal({
         title: "Tem certeza que quer deletar este registro?",
         text: "O registro será deletado definitivamente!",
@@ -108,7 +108,7 @@ function deletarFornecedor(idFuncionario) {
         dangerMode: true,
     }).then((isConfirm) => {
         if (isConfirm) {
-            api.delete('/Funcionario/' + idFuncionario)
+            api.delete('/Funcionario/' + uuid)
             limparForm()
         }
     })
@@ -130,7 +130,7 @@ function Grid(coluna, text) {
             $("#TableFuncionario tbody").empty()
             for (const item of data) {
                 $("#TableFuncionario tbody").append(`
-                    <tr onclick="selectGridFuncionario(${item.idFuncionario})"> 
+                    <tr onclick="selectGridFuncionario('${item.uuid}')"> 
                         <td>${item.nome}</td> 
                         <td>${item.cpf || ''}</td>
                         <td>${item.cidade || ''}</td>
@@ -172,7 +172,7 @@ document.getElementById('btnNovo').addEventListener('click', (e) => {
 
 document.getElementById('btnDeletar').addEventListener('click', (e) => {
     e.preventDefault()
-    const id = document.getElementById('idFuncionario').value
-    if (id)
-        deletarFornecedor(Number(id))
+    const uuid = document.getElementById('uuid').value
+    if (uuid)
+        deletarFornecedor(uuid)
 })
