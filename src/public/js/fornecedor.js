@@ -31,7 +31,7 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
     }
 
     removeInvalidForm()
-    const id = document.getElementById('idFornecedor').value
+    const id = document.getElementById('uuid').value
     if (id === '')
         salvarFornecedor(data)
     else
@@ -43,7 +43,7 @@ function salvarFornecedor(data) {
 
     api.post('/Fornecedor', data)
         .then((response) => {
-            document.getElementById('idFornecedor').value = response.data.id
+            document.getElementById('uuid').value = response.data.id
             swal("Fornecedor salvo com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
@@ -90,7 +90,7 @@ function removeInvalidForm() {
     }
 }
 
-function deletarFornecedor(idFornecedor) {
+function deletarFornecedor(uuid) {
     swal({
         title: "Tem certeza que quer deletar este registro?",
         text: "O registro será deletado definitivamente!",
@@ -99,7 +99,7 @@ function deletarFornecedor(idFornecedor) {
         dangerMode: true,
     }).then((isConfirm) => {
         if (isConfirm) {
-            api.delete('/Fornecedor/' + idFornecedor)
+            api.delete('/Fornecedor/' + uuid)
             limparForm()
             $("#TableFornecedor tbody").empty()
         }
@@ -123,7 +123,7 @@ function Grid(coluna, text) {
             $("#TableFornecedor tbody").empty()
             for (const item of data) {
                 $("#TableFornecedor tbody").append(`
-                    <tr onclick="selectGridFornecedor(${item.idFornecedor})"> 
+                    <tr onclick="selectGridFornecedor('${item.uuid}')"> 
                         <td>${item.razaoSocial}</td> 
                         <td>${item.cnpjCpf || ''}</td>
                         <td>${item.cidade || ''}</td>
@@ -161,7 +161,7 @@ document.getElementById('btnNovo').addEventListener('click', (e) => {
 
 document.getElementById('btnDeletar').addEventListener('click', (e) => {
     e.preventDefault()
-    const id = document.getElementById('idFornecedor').value
-    if (id)
-        deletarFornecedor(Number(id))
+    const uuid = document.getElementById('uuid').value
+    if (uuid)
+        deletarFornecedor(uuid)
 })

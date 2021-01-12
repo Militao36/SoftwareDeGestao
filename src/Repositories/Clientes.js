@@ -6,19 +6,19 @@ class Clientes {
     }
 
     update(cliente) {
-        return knex('cliente').update(cliente).where('idCliente', '=', cliente.idCliente);
+        return knex('cliente').update(cliente).where('uuid', '=', cliente.uuid);
     }
 
-    delete(idCliente) {
-        return knex('cliente').delete().where('idCliente', '=', idCliente);
+    delete(uuid) {
+        return knex('cliente').delete().where('uuid', '=', uuid);
     }
 
-    findById(idCliente) {
+    findById(uuid) {
         return knex('cliente').select(
-            ["idCliente", "nome", "cpfCnpj", "ie",
+            ["uuid", "nome", "cpfCnpj", "ie",
                 "endereco", "numero", "complemento", "bairro", "cidade", "uf",
                 "email", "telefone"]
-        ).where('idCliente', '=', idCliente);
+        ).where('uuid', '=', uuid);
     }
 
     buscarFiltro(sql) {

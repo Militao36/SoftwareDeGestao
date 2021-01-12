@@ -13,7 +13,7 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
     e.preventDefault()
 
     removeInvalidForm()
-    if (document.getElementById('idCliente').value == "")
+    if (document.getElementById('uuid').value == "")
         salvarCliente()
     else
         editarCliente()
@@ -35,7 +35,7 @@ function salvarCliente() {
 
     api.post('/Cliente', data)
         .then((response) => {
-            document.getElementById('idCliente').value = response.data.id
+            document.getElementById('uuid').value = response.data.id
             swal("Cliente salvo com sucesso.", "", "success");
         }).catch((error) => {
             if (error.response.data.validacoes)
@@ -58,7 +58,7 @@ function editarCliente() {
         email: document.getElementById('email').value,
         telefone: document.getElementById('telefone').value,
     }
-    const id = document.getElementById('idCliente').value
+    const id = document.getElementById('uuid').value
     api.put('/Cliente/' + id, data)
         .then((response) => {
             swal("Cliente editado com sucesso.", "", "success");
@@ -70,7 +70,7 @@ function editarCliente() {
         })
 }
 
-function deletarCliente(idCliente) {
+function deletarCliente(uuid) {
     swal({
         title: "Tem certeza que quer deletar este registro?",
         text: "O registro será deletado definitivamente!",
@@ -79,7 +79,7 @@ function deletarCliente(idCliente) {
         dangerMode: true,
     }).then((isConfirm) => {
         if (isConfirm) {
-            api.delete('/Cliente/' + idCliente)
+            api.delete('/Cliente/' + uuid)
             limparForm()
             $("#TableCliente tbody").empty()
         }
@@ -137,7 +137,7 @@ function Grid(coluna, text) {
             $("#TableCliente tbody").empty()
             for (const item of data) {
                 $("#TableCliente tbody").append(`
-                    <tr onclick="selectGridCliente(${item.idCliente})"> 
+                    <tr onclick="selectGridCliente('${item.uuid}')"> 
                         <td>${item.nome}</td> 
                         <td>${item.cpfCnpj || ''}</td>
                         <td>${item.cidade || ''}</td>
@@ -164,6 +164,6 @@ document.getElementById('btnNovo').addEventListener('click', (e) => {
 
 document.getElementById('btnDeletar').addEventListener('click', (e) => {
     e.preventDefault()
-    const id = document.getElementById('idCliente').value
-    deletarCliente(Number(id))
+    const uuid = document.getElementById('uuid').value
+    deletarCliente(uuid)
 })

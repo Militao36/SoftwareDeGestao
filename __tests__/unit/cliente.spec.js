@@ -33,7 +33,7 @@ describe("Test api cliente", () => {
       .post("/Cliente")
       .send(data)
     id = response.body.id
-    expect(typeof (response.body.id)).toBe('number');
+    expect(typeof (response.body.id)).toBe('string');
     expect(response.statusCode).toBe(201);
   })
 

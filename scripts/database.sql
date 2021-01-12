@@ -1,3 +1,5 @@
+drop database optica;
+
 create database optica;
 
 use optica;
@@ -13,6 +15,7 @@ create table usuario(
 
 create table cliente(
     idCliente int auto_increment primary key,
+    uuid varchar(36),
     idEmpresa int,
     nome varchar(100),
     cpfCnpj varchar(18),
@@ -25,7 +28,7 @@ create table cliente(
     cidade varchar(50),
     uf varchar(2),
     email varchar(100),
-    telefone varchar(11),
+    telefone varchar(15),
     ativo boolean,
     createAt date,
     updateAt date
@@ -33,6 +36,7 @@ create table cliente(
 
 CREATE TABLE fornecedor(
     idFornecedor int AUTO_INCREMENT PRIMARY KEY,
+    uuid varchar(36),
     idEmpresa int,
     razaoSocial varchar(150),
     nomeFantasia varchar(150),
@@ -54,6 +58,7 @@ CREATE TABLE fornecedor(
 
 create table produto(
     idProduto int auto_increment primary key,
+    uuid varchar(36),
     idEmpresa int,
     codBarras varchar(150),
     nomeProduto varchar(100),
@@ -68,6 +73,7 @@ create table produto(
 
 CREATE TABLE funcionario(
     idFuncionario int AUTO_INCREMENT PRIMARY KEY,
+    uuid varchar(36),
     idEmpresa int,
     nome varchar(150) NOT NULL,
     cpf varchar(20),
@@ -94,12 +100,14 @@ CREATE TABLE funcionario(
 
 create table statusPedido(
     idStatusPedido int auto_increment primary key,
+    uuid varchar(36),
     idEmpresa int,
     nomeStatus varchar(20)
 );
 
 create table pedido (
     idPedido int auto_increment primary key,
+    uuid varchar(36),
     idEmpresa int,
     idCliente int,
     dataPedido date,
@@ -115,6 +123,7 @@ create table pedido (
 
 create table produtoPedido(
     idProdutoPedido int auto_increment primary key,
+    uuid varchar(36),
     idEmpresa int,
     idProduto int,
     quantidade int,

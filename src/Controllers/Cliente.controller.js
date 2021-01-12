@@ -21,12 +21,12 @@ class ClienteController {
 
     async put(req, res) {
         const { nome, cpfCnpj, ie, subTributario, endereco, numero, complemento, bairro, cidade, uf, email, telefone } = req.body;
-
+       
         const result = await ClienteHandleUpdate.Handler({
             nome, cpfCnpj, ie, subTributario, endereco,
             numero, complemento, bairro, cidade, uf,
             email, telefone,
-            idCliente: Number(req.params.id),
+            uuid: req.params.id,
         }, req.idEmpresa);
 
         if (Array.isArray(result)) {
@@ -37,8 +37,8 @@ class ClienteController {
 
     async delete(req, res) {
         try {
-            const idCliente = req.params.id;
-            await ClienteRepo.delete(Number(idCliente));
+            const uuid = req.params.id;
+            await ClienteRepo.delete(uuid);
             return res.status(204).json({});
         } catch (error) {
             return res.status(500).send('Erro ao deletar cliente');
@@ -47,8 +47,8 @@ class ClienteController {
 
     async findById(req, res) {
         try {
-            const idCliente = req.params.id;
-            const cliente = await ClienteRepo.findById(Number(idCliente));
+            const uuid = req.params.id;
+            const cliente = await ClienteRepo.findById(uuid);
             return res.status(200).json({ cliente: cliente[0] });
         } catch (error) {
             return res.status(500).send('Erro ao pesquisar cliente');
@@ -58,7 +58,7 @@ class ClienteController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT nome,cpfCnpj,cidade,idCliente FROM cliente ';
+            let sql = 'SELECT nome,cpfCnpj,cidade,uuid FROM cliente ';
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;

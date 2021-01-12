@@ -6,19 +6,19 @@ class Fornecedor {
     }
 
     update(fornecedor) {
-        return knex('fornecedor').update(fornecedor).where('idFornecedor', '=', fornecedor.idFornecedor);
+        return knex('fornecedor').update(fornecedor).where('uuid', '=', fornecedor.uuid);
     }
 
-    delete(idFornecedor) {
-        return knex('fornecedor').delete().where('idFornecedor', '=', idFornecedor);
+    delete(uuid) {
+        return knex('fornecedor').delete().where('uuid', '=', uuid);
     }
 
-    findById(idFornecedor) {
+    findById(uuid) {
         return knex('fornecedor').select(
-            ["idFornecedor", "razaoSocial", "nomeFantasia", "logradouro",
+            ["uuid", "razaoSocial", "nomeFantasia", "logradouro",
                 "numero", "complemento", "bairro", "cep", "cidade", "uf",
                 "telefone", "celular", "cnpjCpf", "ie", "email"]
-        ).where('idFornecedor', '=', idFornecedor);
+        ).where('uuid', '=', uuid);
     }
 
     buscarFiltro(sql) {

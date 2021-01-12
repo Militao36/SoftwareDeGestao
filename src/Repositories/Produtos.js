@@ -6,23 +6,23 @@ class Produtos {
     }
 
     update(produto) {
-        return knex('produto').update(produto).where('idProduto', '=', produto.idProduto);
+        return knex('produto').update(produto).where('uuid', '=', produto.uuid);
     }
 
-    delete(idProduto) {
-        return knex('produto').delete().where('idProduto', '=', idProduto);
+    delete(uuid) {
+        return knex('produto').delete().where('uuid', '=', uuid);
     }
 
-    findById(idProduto) {
+    findById(uuid) {
         return knex('produto').select(
-            ["idProduto", "codBarras", "nomeProduto", "valor", "estoque",
+            ["uuid", "codBarras", "nomeProduto", "valor", "estoque",
                 "estoqueMin", "idFornecedor"]
-        ).where('idProduto', '=', idProduto);
+        ).where('uuid', '=', uuid);
     }
 
     findByCodBarras(codBarras) {
         return knex('produto').select(
-            ["idProduto", "codBarras"]
+            ["uuid", "codBarras"]
         ).where('codBarras', '=', codBarras);
     }
 
