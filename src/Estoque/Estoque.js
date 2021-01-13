@@ -8,10 +8,9 @@ import { uuid } from '../Utils/uuid'
 class Estoque {
     async saida(quantidade, uuidProduto) {
         await knex.transaction(async (trx) => {
-            const produto = await trx.table('produto').select().where('uuid', '=', uuidProduto)
-            const estoqueBefore = Number(produto.estoque)
-            const estoqueAfter = (Number(produto.estoque)) - quantidade
-
+            const produto = await trx.table('produto').select().where('uuid', '=', uuidProduto).first()
+            const estoqueBefore = produto.estoque
+            const estoqueAfter = produto.estoque - quantidade
 
             try {
                 await trx.table('produto').update({
@@ -31,9 +30,9 @@ class Estoque {
 
     async entrada(quantidade, uuidProduto) {
         await knex.transaction(async (trx) => {
-            const produto = await trx.table('produto').select().where('uuid', '=', uuidProduto)
-            const estoqueBefore = Number(produto.estoque)
-            const estoqueAfter = (Number(produto.estoque)) + quantidade
+            const produto = await trx.table('produto').select().where('uuid', '=', uuidProduto).first()
+            const estoqueBefore = produto.estoque
+            const estoqueAfter = produto.estoque + quantidade
 
             try {
                 await trx.table('produto').update({
@@ -42,6 +41,7 @@ class Estoque {
 
                 await trx.table('movimentacao').insert({
                     uuid, tipo: 'entrada', quantidade: quantidade, estoqueBefore, estoqueAfter,
+                    idProduto: produto.idProduto
                 }).transacting(trx)
 
                 trx.commit()

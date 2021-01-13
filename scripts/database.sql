@@ -74,12 +74,14 @@ create table produto(
 create table movimentacao(
     idMovimentacao int auto_increment primary key,
     uuid varchar(36),
+    idProduto int,
     tipo enum('saida','entrada','transferencia'),
     quantidade int,
     estoqueBefore int,
     estoqueAfter int,
-    createAt date,
     updateAt date,
+    createAt date,
+    FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
 );
 
 CREATE TABLE funcionario(
