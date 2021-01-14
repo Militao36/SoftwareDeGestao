@@ -6,11 +6,11 @@ import ProdutoRepo from '../Repositories/Produtos';
 
 class ProdutoController {
     async post(req, res) {
-        const { codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor } = req.body;
+        const { codBarras, nomeProduto, valor, estoqueMin, idFornecedor } = req.body;
         const idEmpresa = req.idEmpresa;
 
         const result = await ProdutoHandlerSave.Handler({
-            codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor
+            codBarras, nomeProduto, valor, estoqueMin, idFornecedor
         }, idEmpresa);
         if (Array.isArray(result)) {
             return res.status(422).json({ validacoes: result });
@@ -19,11 +19,11 @@ class ProdutoController {
     }
 
     async put(req, res) {
-        const { codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor } = req.body;
+        const { codBarras, nomeProduto, valor, estoqueMin, idFornecedor } = req.body;
         const idEmpresa = req.idEmpresa;
 
         const result = await ProdutoHandlerUpdate.Handler({
-            codBarras, nomeProduto, valor, estoque, estoqueMin, idFornecedor, uuid: req.params.id,
+            codBarras, nomeProduto, valor, estoqueMin, idFornecedor, uuid: req.params.id,
         }, idEmpresa);
         if (Array.isArray(result)) {
             return res.status(422).json({ validacoes: result });
@@ -61,7 +61,7 @@ class ProdutoController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT nomeProduto,valor,estoque,uuid FROM produto ';
+            let sql = 'SELECT nomeProduto,valor,uuid FROM produto ';
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;

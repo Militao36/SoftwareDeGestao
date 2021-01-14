@@ -10,7 +10,6 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
         codBarras: document.getElementById('codBarras').value,
         nomeProduto: document.getElementById('nomeProduto').value,
         valor: document.getElementById('valor').value,
-        estoque: Number(document.getElementById('estoque').value || '0'),
         estoqueMin: Number(document.getElementById('estoqueMin').value || '0'),
         idFornecedor: document.getElementById('idFornecedor').value == "null" ? null : document.getElementById('idFornecedor').value,
     }

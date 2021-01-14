@@ -6,11 +6,17 @@ class StatusPedido {
     }
 
     update(statusPedido) {
-        return knex('statusPedido').update(statusPedido).where('idStatusPedido', '=', statusPedido.idStatusPedido);
+        return knex('statusPedido').update(statusPedido).where('uuid', '=', statusPedido.uuid);
     }
 
-    delete(idStatusPedido) {
-        return knex('statusPedido').delete().where('idStatusPedido', '=', idStatusPedido);
+    delete(uuid) {
+        return knex('statusPedido').delete().where('uuid', '=', uuid);
+    }
+
+    findById(uuid) {
+        return knex('statusPedido').select(
+            ["uuid", "nomeStatus"]
+        ).where('uuid', '=', uuid).first()
     }
 
     buscarFiltro(sql) {
