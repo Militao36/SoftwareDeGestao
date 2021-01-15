@@ -6,9 +6,12 @@ const router = Router();
 const produto = new ProdutoController();
 
 router.get('/', async (req, res) => {
+    const fornecedor = await FornecedorRepo.buscarFiltro(`
+        select razaoSocial,uuid from fornecedor where idEmpresa = '${req.idEmpresa}'
+    `) 
     return res.render('produto', {
         title: 'BMS Optica',
-        forncedor: (await FornecedorRepo.buscarFiltro('select razaoSocial,uuid from fornecedor'))[0]
+        forncedor: ()[0]
     })
 });
 router.post('/', produto.post);
