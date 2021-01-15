@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     `) 
     return res.render('produto', {
         title: 'BMS Optica',
-        forncedor: ()[0]
+        forncedor: fornecedor[0]
     })
 });
 router.post('/', produto.post);
