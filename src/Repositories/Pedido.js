@@ -6,11 +6,15 @@ class Pedido {
     }
 
     update(pedido) {
-        return knex('pedido').update(pedido).where('idPedido', '=', pedido.idPedido);
+        return knex('pedido').update(pedido).where('uuid', '=', pedido.uuid);
     }
 
-    delete(idPedido) {
-        return knex('pedido').delete().where('idPedido', '=', idPedido);
+    delete(uuid) {
+        return knex('pedido').delete().where('uuid', '=', uuid);
+    }
+
+    findById(uuid) {
+        throw new Error('verificar isso daqui')
     }
 
     buscarFiltro(sql) {

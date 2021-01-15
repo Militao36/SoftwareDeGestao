@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/pedido.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <%- include('components/navbar'); %>
+        <br>
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Pedido</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="nav nav-tabs" id="tab-Produto" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">Dados</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">Produtos</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <br>
+                            <form id="frmPedido">
+                                <div class="row">
+                                    <div class="col-md-12" style="display: none;">
+                                        <input type="text" id="uuid" class="form-control">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <select class="form-control" id="idCliente">
+                                            <option value=''>--- Selecione o Cliente ---</option>
+                                            <% for(let i=0; i < cliente.length;i++){ %>
+                                                <option value="<%= cliente[i].uuid %>">
+                                                    <%= cliente[i].nome %>
+                                                </option>
+                                                <% }%>
+                                        </select>
+                                        <div id="IidCliente" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="date" id="dataPedido" class="form-control"
+                                            placeholder="Nome">
+                                        <div id="IdataPedido" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control" id="idStatusPedido">
+                                            <option value=''>--- Selecione o status ---</option>
+                                            <% for(let i=0; i < status.length;i++){ %>
+                                                <option value="<%= status[i].uuid %>">
+                                                    <%= status[i].nomeStatus %>
+                                                </option>
+                                                <% }%>
+                                        </select>
+                                        <div id="IidStatusPedido" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <select class="form-control" id="idFuncionario">
+                                            <option value=''>--- Selecione o Funcionario ---</option>
+                                            <% for(let i=0; i < funcionario.length;i++){ %>
+                                                <option value="<%= funcionario[i].uuid %>">
+                                                    <%= funcionario[i].nome %>
+                                                </option>
+                                                <% }%>
+                                        </select>
+                                        <div id="IidFuncionario" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="number" id="valorComissao" maxlength="100" class="form-control"
+                                            placeholder="Comissão" disabled>
+                                        <div id="IvalorComissao" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="observacao" maxlength="100" class="form-control"
+                                            placeholder="Observação">
+                                        <div id="Iobservacao" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <br>
+                            <form id="frmProduto2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="number" readonly id="estoque" maxlength="100" class="form-control"
+                                            placeholder="Estoque">
+                                        <div id="Iestoque" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="estoqueMin" maxlength="10" class="form-control"
+                                            placeholder="Estoque minimo">
+                                        <div id="IestoqueMin" style="display: none;">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" style="margin-top:10px" id="btnSalvar">Salvar</button>
+                    <button class="btn btn-secondary" style="margin-top:10px" id="btnNovo">Novo</button>
+                    <button class="btn btn-danger" style="margin-top:10px" id="btnDeletar">Deletar</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="pesquisa">
+                        <input type="text" id="txtPesquisa" class="form-control" placeholder="Pesquisar"
+                            style="margin-bottom: 10px;">
+                        <select class="form-control" id="selectColuna">
+                            <option value="nomeProduto">Nome</option>
+                            <option value="codBarras">Cpf/Cnpj</option>
+                        </select>
+                    </div>
+                    <table class="table table-dark" id="tablePedido">
+                        <thead>
+                            <tr>
+                                <th scope="col-md">Nome</th>
+                                <th scope="col-md">Valor</th>
+                                <th scope="col-md">Estoque</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <br><br>
+        <br><br>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="js/api.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+        <script src="js/utils.js"></script>
+        <script src="js/pedido.js"></script>
+</body>
+
+</html>

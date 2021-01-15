@@ -2,7 +2,7 @@
 import PedidoHandleSave from '../Handlers/Pedido/PedidoSave';
 import PedidoHandleUpdate from '../Handlers/Pedido/PedidoUpdate';
 
-import PeidoRepo from '../Repositories/Pedido';
+import PedidoRepo from '../Repositories/Pedido';
 
 class PedidoController {
     async post(req, res) {
@@ -13,9 +13,9 @@ class PedidoController {
             idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia,
         }, idEmpresa);
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
-        return res.status(203).json({ id: result });
+        return res.status(201).json({ id: result });
     }
 
     async put(req, res) {
@@ -24,42 +24,55 @@ class PedidoController {
         const idEmpresa = req.idEmpresa;
 
         const result = await PedidoHandleUpdate.Handler({
-            idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia,
+            idCliente, dataPedido, idStatusPedido, idFuncionario,
+            valorComissao, observacao, numeroReferencia, uuid: req.params.id
         }, idEmpresa);
         if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            return res.status(422).json({ validacoes: result });
         }
-        return res.status(200).json({});
+        return res.status(204).json({});
     }
 
     async delete(req, res) {
         try {
-            const idFornecedor = req.params.id;
-            await PeidoRepo.delete(Number(idFornecedor));
-            return res.status(200).json({});
+            const uuid = req.params.id;
+            await PedidoRepo.delete(uuid);
+            return res.status(204).json({});
         } catch (error) {
-            return res.status(400).send('Erro ao deletar pedido');
+            return res.status(500).send('Erro ao deletar pedido');
+        }
+    }
+
+    async findById(req, res) {
+        try {
+            const uuid = req.params.id;
+            const pedido = await PedidoRepo.findById(uuid);
+            return res.status(200).json({
+                pedido: pedido
+            });
+        } catch (error) {
+            return res.status(500).send('Erro ao pesquisar pedido');
         }
     }
 
     async buscarFiltro(req, res) {
         try {
-            let sql = 'SELECT * FROM pedido ';
-            const query = req.query;
-            const keys = Object.keys(query);
-            for (const item of keys) {
-                if (item.startsWith('MENOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} < '${query[item]}'`;
-                } else if (item.startsWith('MAIOR')) {
-                    sql += `WHERE ${item.substring(5, item.length)} > '${query[item]}'`;
-                } else {
-                    sql += `WHERE ${item} = '${query[item]}'`;
-                }
+            const idEmpresa = req.idEmpresa;
+            let sql = 'SELECT idCliente,idStatusPedido,uuid,dataPedido FROM pedido ';
+
+            if (req.params.text !== 'null') {
+                sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;
+                sql += ` and idEmpresa = ${idEmpresa}`;
+            } else {
+                sql += `where idEmpresa = ${idEmpresa}`;
             }
-            const result = await PeidoRepo.buscarFiltro(sql);
-            return res.status(200).json(result[0]);
+            sql += ' LIMIT 10'
+            const result = await ProdutoRepo.buscarFiltro(sql);
+            return res.status(200).json({
+                data: result[0]
+            });
         } catch (error) {
-            return res.status(400).send('Erro ao pesquisar pedidos');
+            return res.status(500).send('Erro ao pesquisar pedido');
         }
     }
 }

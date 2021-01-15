@@ -41,7 +41,10 @@ function removeInvalidForm() {
         return
 
     for (let index = 0; index <= elements.length; index++) {
-        const input = elements[0].parentElement.getElementsByTagName('input')[0]
+        let input = null
+        input = elements[0].parentElement.getElementsByTagName('input')[0]
+        if (!input)
+            input = elements[0].parentElement.getElementsByTagName('select')[0]
         elements[0].style.display = 'none'
         input.classList.remove('is-invalid')
         elements[0].classList.remove('invalid-feedback')

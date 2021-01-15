@@ -2,6 +2,7 @@ import express from 'express';
 import Routes from './Routes/routes';
 import path from 'path'
 import Auth from './Middlewares/Auth'
+import ConvertEmptyStringsToNull from './Middlewares/ConvertEmptyStringsToNull'
 
 class App {
     constructor() {
@@ -16,6 +17,7 @@ class App {
         this.express.use(express.static(path.join(__dirname, 'public')));
         this.express.use(express.json());
         this.express.use(Auth)
+        this.express.use(ConvertEmptyStringsToNull)
     }
 
     routes() {

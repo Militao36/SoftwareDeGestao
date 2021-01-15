@@ -18,8 +18,9 @@ class Clientes {
             ["uuid", "nome", "cpfCnpj", "ie",
                 "endereco", "numero", "complemento", "bairro", "cidade", "uf",
                 "email", "telefone"]
-        ).where('uuid', '=', uuid);
+        ).where('uuid', '=', uuid).first();
     }
+    
 
     buscarFiltro(sql) {
         return knex.raw(sql);
