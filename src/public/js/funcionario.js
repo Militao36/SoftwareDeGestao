@@ -37,7 +37,7 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
 
     data.salario = data.salario.replace('.', '').replace(',', '.')
     data.dataAdmissao = dateTransformHttp(data.dataAdmissao)
-    data.comissao = data.comissao != "" ? 0 : Number(data.comissao.replace('.', '').replace(',', '.'))
+    data.comissao = data.comissao === "" ? 0 : Number(data.comissao.replace('.', '').replace(',', '.'))
     data.dataDemissao = dateTransformHttp(data.dataDemissao)
 
     removeInvalidForm()
@@ -150,4 +150,11 @@ document.getElementById('btnDeletar').addEventListener('click', (e) => {
     const uuid = document.getElementById('uuid').value
     if (uuid)
         deletarFornecedor(uuid)
+})
+
+
+document.getElementById('idFuncionario').addEventListener('change', (e) => {
+    e.preventDefault()
+
+
 })
