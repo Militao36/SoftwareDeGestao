@@ -80,7 +80,7 @@
                                         <select class="form-control" id="idFuncionario">
                                             <option value=''>--- Selecione o Funcionario ---</option>
                                             <% for(let i=0; i < funcionario.length;i++){ %>
-                                                <option value="<%= funcionario[i].uuid %>">
+                                                <option data-comissao="<%= funcionario[i].comissao %>" value="<%= funcionario[i].uuid %>">
                                                     <%= funcionario[i].nome %>
                                                 </option>
                                                 <% }%>
