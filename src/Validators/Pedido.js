@@ -9,19 +9,19 @@ export default (pedido) => {
         })
     }
 
-    if (!pedido.idStatusPedido) {
+    if (pedido.idStatusPedido === null) {
         erros.push({
             idStatusPedido: 'O campo de status do pedido não pode ficar em branco.'
         })
     }
 
-    if (!pedido.dataPedido) {
+    if (pedido.dataPedido === null) {
         erros.push({
             dataPedido: 'O campo de data do pedido não pode ficar em branco.'
         })
     }
 
-    if (!pedido.idEmpresa) {
+    if (pedido.idEmpresa === null) {
         erros.push({
             idEmpresa: 'Está faltando o id da empresa.'
         });

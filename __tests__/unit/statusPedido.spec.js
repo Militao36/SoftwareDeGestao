@@ -16,7 +16,6 @@ describe("Test api status pedido", () => {
             .post("/StatusPedido")
             .send(data)
         id = response.body.id
-        console.log(response.body)
         expect(typeof (response.body.id)).toBe('string');
         expect(response.statusCode).toBe(201);
     })

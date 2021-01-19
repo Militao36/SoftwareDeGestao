@@ -19,7 +19,6 @@ router.get('/', async (req, res) => {
         select uuid,nome,comissao from funcionario where idEmpresa = '${req.idEmpresa}'`
     )
 
-    console.log(funcionario[0])
     return res.render('pedido', {
         title: 'BMS Optica',
         cliente: clientes[0],

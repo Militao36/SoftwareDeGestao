@@ -33,7 +33,6 @@ class StatusPedidoController {
             await StatusPedidoRepo.delete(uuid);
             return res.status(204).json({});
         } catch (error) {
-            console.log
             return res.status(500).send('Erro ao deletar status do pedido');
         }
     }
