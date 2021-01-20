@@ -40,3 +40,7 @@ a {
   select{
     margin-top: 10px;
   }
+
+  #selectColuna{
+    margin-top: 0px;
+  }

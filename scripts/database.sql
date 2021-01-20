@@ -126,9 +126,7 @@ create table pedido (
     dataPedido date,
     idStatusPedido int,
     idFuncionario int,
-    valorComissao decimal(13,2),
     observacao varchar(30),
-    numeroReferencia varchar(20),
     FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario),
     FOREIGN KEY (idCliente) REFERENCES cliente (idCliente),
     FOREIGN KEY (idStatusPedido) REFERENCES statusPedido (idStatusPedido)
@@ -148,3 +146,21 @@ create table produtoPedido(
 
 
 
+CREATE VIEW lis_pedido
+AS SELECT 
+p.uuid,
+p.idEmpresa,
+p.observacao,
+DATE_FORMAT(p.dataPedido ,'%Y-%m-%d') as dataPedido,
+c.uuid as uuidCliente,
+f.uuid as uuidFuncionario,
+s.uuid as uuidStatus,
+c.nome as nomeCliente,
+f.nome as nomeFuncionario,
+s.nomeStatus
+FROM pedido p
+INNER JOIN cliente c
+ON p.idCliente = c.idCliente 
+INNER JOIN statusPedido s 
+ON p.idStatusPedido = s.idStatusPedido 
+LEFT JOIN funcionario f on p.idFuncionario = f.idFuncionario

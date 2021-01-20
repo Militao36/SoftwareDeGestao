@@ -18,6 +18,12 @@ class StatusPedido {
             ["uuid", "nomeStatus"]
         ).where('uuid', '=', uuid).first()
     }
+    
+    findByIdStatusPedido(idStatusPedido ) {
+        return knex('statusPedido').select(
+            ["idStatusPedido ", "nomeStatus"]
+        ).where('idStatusPedido ', '=', idStatusPedido ).first()
+    }
 
     buscarFiltro(sql) {
         return knex.raw(sql);

@@ -23,6 +23,12 @@ class Funcionario {
         ).where('uuid', '=', uuid);
     }
 
+    findByIdFuncionario(idFuncionario) {
+        return knex('funcionario').select(
+            ["idFuncionario", "nome"]
+        ).where('idFuncionario', '=', idFuncionario);
+    }
+
 
     buscarFiltro(sql) {
         return knex.raw(sql);

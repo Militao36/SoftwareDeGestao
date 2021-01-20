@@ -29,6 +29,7 @@ router.get('/', async (req, res) => {
 router.post('/', Pedido.post);
 router.put('/:id', Pedido.put);
 router.delete('/:id', Pedido.delete);
-router.get('/', Pedido.buscarFiltro);
+router.get('/:id', Pedido.findById);
+router.get('/Search/:coluna/:text', Pedido.buscarFiltro);
 
 export default router;

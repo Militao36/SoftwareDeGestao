@@ -55,9 +55,7 @@ describe("Test api pedido", () => {
             dataPedido: '2021-01-17',
             idStatusPedido: statusResponse.body.id,
             idFuncionario: funcionarioResponse.body.id,
-            valorComissao: 0,
             observacao: '',
-            numeroReferencia: ''
         }
     });
 

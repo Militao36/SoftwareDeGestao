@@ -14,7 +14,7 @@ class Pedido {
     }
 
     findById(uuid) {
-        throw new Error('verificar isso daqui')
+        return knex('lis_pedido').select().where('uuid', '=', uuid).first();
     }
 
     buscarFiltro(sql) {

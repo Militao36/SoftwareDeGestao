@@ -6,11 +6,11 @@ import PedidoRepo from '../Repositories/Pedido';
 
 class PedidoController {
     async post(req, res) {
-        const { idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia } = req.body;
+        const { idCliente, dataPedido, idStatusPedido, idFuncionario, observacao } = req.body;
         const idEmpresa = req.idEmpresa;
 
         const result = await PedidoHandleSave.Handler({
-            idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia,
+            idCliente, dataPedido, idStatusPedido, idFuncionario, observacao,
         }, idEmpresa);
         if (Array.isArray(result)) {
             return res.status(422).json({ validacoes: result });
@@ -19,13 +19,13 @@ class PedidoController {
     }
 
     async put(req, res) {
-        const { idCliente, dataPedido, idStatusPedido, idFuncionario, valorComissao, observacao, numeroReferencia } = req.body;
+        const { idCliente, dataPedido, idStatusPedido, idFuncionario, observacao } = req.body;
 
         const idEmpresa = req.idEmpresa;
 
         const result = await PedidoHandleUpdate.Handler({
             idCliente, dataPedido, idStatusPedido, idFuncionario,
-            valorComissao, observacao, numeroReferencia, uuid: req.params.id
+            observacao, uuid: req.params.id
         }, idEmpresa);
         if (Array.isArray(result)) {
             return res.status(422).json({ validacoes: result });
@@ -48,7 +48,13 @@ class PedidoController {
             const uuid = req.params.id;
             const pedido = await PedidoRepo.findById(uuid);
             return res.status(200).json({
-                pedido: pedido
+                pedido: {
+                    idCliente: pedido.uuidCliente,
+                    idFuncionario: pedido.uuidFuncionario || '',
+                    idStatusPedido: pedido.uuidStatus,
+                    dataPedido: pedido.dataPedido,
+                    observacao: pedido.observacao
+                }
             });
         } catch (error) {
             return res.status(500).send('Erro ao pesquisar pedido');
@@ -58,7 +64,7 @@ class PedidoController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT idCliente,idStatusPedido,uuid,dataPedido FROM pedido ';
+            let sql = `SELECT nomeCliente,dataPedido,nomeStatus,uuid FROM lis_pedido `;
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;
@@ -67,11 +73,12 @@ class PedidoController {
                 sql += `where idEmpresa = ${idEmpresa}`;
             }
             sql += ' LIMIT 10'
-            const result = await ProdutoRepo.buscarFiltro(sql);
+            const result = await PedidoRepo.buscarFiltro(sql);
             return res.status(200).json({
                 data: result[0]
             });
         } catch (error) {
+            console.log(error)
             return res.status(500).send('Erro ao pesquisar pedido');
         }
     }
