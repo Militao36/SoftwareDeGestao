@@ -75,7 +75,7 @@ create table movimentacao(
     idMovimentacao int auto_increment primary key,
     uuid varchar(36),
     idProduto int,
-    tipo enum('saida','entrada','transferencia'),
+    tipo enum('saida','entrada','ajuste'),
     quantidade int,
     estoqueBefore int,
     estoqueAfter int,

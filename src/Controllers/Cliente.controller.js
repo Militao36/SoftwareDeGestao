@@ -49,7 +49,7 @@ class ClienteController {
         try {
             const uuid = req.params.id;
             const cliente = await ClienteRepo.findById(uuid);
-            return res.status(200).json({ cliente: cliente[0] });
+            return res.status(200).json({ cliente: cliente });
         } catch (error) {
             return res.status(500).send('Erro ao pesquisar cliente');
         }
