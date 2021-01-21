@@ -3,7 +3,7 @@ import { IsEmail } from '../Utils/isEmail';
 export default (funcionario) => {
     const erros = [];
 
-    if (funcionario.email == null & !IsEmail(funcionario.email)) {
+    if (funcionario.email & !IsEmail(funcionario.email)) {
         erros.push({
             email: 'E-mail incorreto'
         });
