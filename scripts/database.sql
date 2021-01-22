@@ -139,7 +139,7 @@ create table produtoPedido(
     idProduto int,
     quantidade int,
     valor decimal(13,2),
-    desconto decimal(3,2),
+    desconto decimal(13,2),
     observacao varchar(40),
     FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
 );
@@ -164,3 +164,18 @@ ON p.idCliente = c.idCliente
 INNER JOIN statusPedido s 
 ON p.idStatusPedido = s.idStatusPedido 
 LEFT JOIN funcionario f on p.idFuncionario = f.idFuncionario
+
+
+CREATE VIEW lis_produto_pedido
+AS SELECT 
+produtoP.uuid,
+produtoP.quantidade,
+produtoP.uuidPedido as uuidPedido,
+produtoP.idEmpresa,
+produtoP.valor,
+produtoP.desconto,
+p.nomeProduto,
+p.uuid as uuidProduto
+FROM produtoPedido produtoP
+INNER JOIN produto p
+ON produtoP.idProduto = p.idProduto

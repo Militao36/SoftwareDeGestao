@@ -53,7 +53,8 @@ class PedidoController {
                     idFuncionario: pedido.uuidFuncionario || '',
                     idStatusPedido: pedido.uuidStatus,
                     dataPedido: pedido.dataPedido,
-                    observacao: pedido.observacao
+                    observacao: pedido.observacao,
+                    uuid: pedido.uuid
                 }
             });
         } catch (error) {

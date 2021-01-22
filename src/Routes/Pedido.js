@@ -3,6 +3,7 @@ import PedidoController from '../Controllers/Pedido.controller';
 import ClienteRepo from '../Repositories/Clientes';
 import StatusRepo from '../Repositories/StatusPedido';
 import FuncionarioRepo from '../Repositories/Funcionario'
+import ProdutoRepo from '../Repositories/Produtos'
 
 
 const router = Router();
@@ -19,11 +20,16 @@ router.get('/', async (req, res) => {
         select uuid,nome,comissao from funcionario where idEmpresa = '${req.idEmpresa}'`
     )
 
+    const produto = await ProdutoRepo.buscarFiltro(`
+        select uuid,nomeProduto from produto where idEmpresa = '${req.idEmpresa}'`
+    )
+
     return res.render('pedido', {
         title: 'BMS Optica',
         cliente: clientes[0],
         status: status[0],
         funcionario: funcionario[0],
+        produto: produto[0]
     })
 });
 router.post('/', Pedido.post);

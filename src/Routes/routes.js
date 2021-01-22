@@ -8,6 +8,7 @@ import Pedido from './Pedido';
 import StatusPedido from './StatusPedido';
 import Home from './Home';
 import Estoque from './Estoque';
+import ProdutoPedido from './ProdutoPedido';
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.use('/Funcionario', FuncionarioRoutes);
 router.use('/StatusPedido', StatusPedido);
 router.use('/Pedido', Pedido);
 router.use('/Estoque', Estoque);
+router.use('/Produto/Pedido', ProdutoPedido);
 
 router.get('/version', (req, res) => res.json({ versao: '1.0.0' }));
 

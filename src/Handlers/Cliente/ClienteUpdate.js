@@ -12,7 +12,7 @@ class HandleCliente {
         if (validacoes.length > 0) {
             return validacoes;
         }
-        const x = await ClienteRepo.update(Cliente);
+        await ClienteRepo.update(Cliente);
         return true;
     }
 }
