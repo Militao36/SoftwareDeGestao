@@ -3,42 +3,56 @@ import ProdutoPedidoHandleSave from '../Handlers/ProdutoPedido/ProdutoPedidoSave
 import ProdutoPedidoHandleUpdate from '../Handlers/ProdutoPedido/ProdutoPedidoUpdate';
 import ProdutoPedidoRepo from '../Repositories/ProdutoPedido';
 import ProdutoRepo from '../Repositories/Produtos';
-
+import Estoque from '../Estoque/Estoque';
 class ProdutoPedidoController {
     async post(req, res) {
-        const { idProduto, quantidade, valor, desconto, observacao, uuidPedido } = req.body;
+        try {
+            const { idProduto, quantidade, valor, desconto, observacao, uuidPedido } = req.body;
 
-        const result = await ProdutoPedidoHandleSave.Handler({
-            idProduto, quantidade, valor, desconto, observacao, uuidPedido
-        }, req.idEmpresa);
+            const result = await ProdutoPedidoHandleSave.Handler({
+                idProduto, quantidade, valor, desconto, observacao, uuidPedido
+            }, req.idEmpresa);
 
-        if (Array.isArray(result)) {
-            return res.status(422).json({ validacoes: result });
+            if (Array.isArray(result)) {
+                return res.status(422).json({ validacoes: result });
+            }
+
+            return res.status(201).json({ id: result });
+        } catch (error) {
+            return res.status(500).send('Ocorreu um erro ao adicionar produto.')
         }
-
-        return res.status(201).json({ id: result });
     }
 
     async put(req, res) {
-        const { idProduto, quantidade, valor, desconto, observacao, uuidPedido } = req.body;
+        try {
+            const { idProduto, quantidade, valor, desconto, observacao, uuidPedido } = req.body;
 
-        const result = await ProdutoPedidoHandleUpdate.Handler({
-            idProduto, quantidade, valor, desconto, observacao, uuidPedido,
-            uuid: req.params.id,
-        }, req.idEmpresa);
+            const result = await ProdutoPedidoHandleUpdate.Handler({
+                idProduto, quantidade, valor, desconto, observacao, uuidPedido,
+                uuid: req.params.id,
+            }, req.idEmpresa);
 
-        if (Array.isArray(result)) {
-            return res.json({ validacoes: result });
+            if (Array.isArray(result)) {
+                return res.json({ validacoes: result });
+            }
+            return res.status(204).json();
+        } catch (error) {
+            return res.status(500).send('Ocorreu um erro ao atualizar o produto.')
         }
-        return res.status(204).json();
     }
 
     async delete(req, res) {
         try {
             const uuid = req.params.id;
+            const produtoPedido = await ProdutoPedidoRepo.findById(uuid);
+            const produto = await ProdutoRepo.findByUuidForIdProduto(produtoPedido.idProduto);
+
             await ProdutoPedidoRepo.delete(uuid);
+            // Desfazer a saida do produto pois atualizei o produto no pedido
+            await Estoque.desfazerSaida(produtoPedido.quantidade, produto.uuid)
             return res.status(204).json({});
         } catch (error) {
+            console.log(error)
             return res.status(500).send('Erro ao deletar cliente');
         }
     }
@@ -49,20 +63,18 @@ class ProdutoPedidoController {
             const produtoPedido = await ProdutoPedidoRepo.findById(uuid);
             const produto = await ProdutoRepo.findByUuidForIdProduto(produtoPedido.idProduto)
 
-            console.log(String(produtoPedido.valor).replace('.', ',').padEnd(4, '0'))
             return res.status(200).json({
                 produtoPedido: {
                     uuidproduto: produtoPedido.uuid,
                     idProduto: produto.uuid,
                     quantidade: produtoPedido.quantidade,
                     valor: String(produtoPedido.valor).split('.').length == 2 ?
-                        String(produtoPedido.valor).replace('.', ',').padEnd(4, '0') : `${produtoPedido.valor},00`,
+                        String(produtoPedido.valor).replace('.', ',') : `${produtoPedido.valor},00`,
                     desconto: produtoPedido.desconto,
                     "produto.observacao": produtoPedido.observacao,
                 }
             });
         } catch (error) {
-            console.log(error)
             return res.status(500).send('Erro ao pesquisar produtos do pedido');
         }
     }
@@ -81,7 +93,6 @@ class ProdutoPedidoController {
                 data: result[0]
             });
         } catch (error) {
-            console.log(error)
             return res.status(500).send('Erro ao pesquisar produtos do pedido');
         }
     }

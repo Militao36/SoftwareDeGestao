@@ -4,11 +4,12 @@ import HandleEstoqueSaida from '../Handlers/Estoque/SaidaEstoque';
 class EstoqueController {
     async entradaProduto(req, res) {
         const { uuid, quantidade } = req.body
-        const result = HandleEstoqueEntrada.Handler(quantidade, uuid)
+        const result = await HandleEstoqueEntrada.Handler(quantidade, uuid)
+
         if (result)
             return res.status(204).json({})
 
-        return res.status(400).json({
+        return res.status(500).json({
             error: 'Ocorreu um erro ao da entrada no produto'
         })
     }
@@ -16,11 +17,11 @@ class EstoqueController {
     async saidaProduto(req, res) {
         const { uuid, quantidade } = req.body
 
-        const result = HandleEstoqueSaida.Handler(quantidade, uuid)
+        const result = await HandleEstoqueSaida.Handler(quantidade, uuid)
         if (result)
             return res.status(204).json({})
 
-        return res.status(400).json({
+        return res.status(500).json({
             error: 'Ocorreu um erro ao da entrada no produto'
         })
     }

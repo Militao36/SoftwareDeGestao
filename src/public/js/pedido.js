@@ -251,7 +251,9 @@ function deletarProdutoPedido(uuid) {
             api.delete('/Produto/Pedido/' + uuid)
             limparFormProdutos()
             $("#tableProdutoPedido tbody").empty()
-            GridProdutos(document.getElementById('uuid').value)
+            setTimeout(() => {
+                GridProdutos(document.getElementById('uuid').value)
+            }, 500)
         }
     })
 }
