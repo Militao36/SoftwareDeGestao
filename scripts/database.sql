@@ -71,6 +71,20 @@ create table produto(
     FOREIGN KEY (idFornecedor) REFERENCES fornecedor (idFornecedor)
 );
 
+create table movimentacao(
+    idMovimentacao int auto_increment primary key,
+    uuid varchar(36),
+    idProduto int,
+    tipo enum('saida','entrada','ajuste'),
+    quantidade int,
+    estoqueBefore int,
+    estoqueAfter int,
+    ref varchar(36),
+    updateAt date,
+    createAt date,
+    FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
+);
+
 CREATE TABLE funcionario(
     idFuncionario int AUTO_INCREMENT PRIMARY KEY,
     uuid varchar(36),

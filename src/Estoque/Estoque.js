@@ -1,4 +1,5 @@
 import knex from '../Config/conn';
+import { uuid } from '../Utils/uuid';
 
 class Estoque {
     async saida(quantidade, uuidProduto) {
@@ -8,11 +9,21 @@ class Estoque {
                     .select().where('uuid', '=', uuidProduto).first()
                     .transacting(trx)
 
-                const estoque = produto.estoque - quantidade
+                const estoqueBefore = produto.estoque
+                const estoqueAfter = produto.estoque - quantidade
 
-                await trx.table('produto').update({
-                    ...produto, estoque: estoque
-                }).where('uuid', '=', uuidProduto).transacting(trx)
+                await trx.table('produto')
+                    .update({
+                        ...produto, estoque: estoqueAfter
+                    }).where('uuid', '=', uuidProduto)
+                    .transacting(trx)
+
+                await trx.table('movimentacao')
+                    .insert({
+                        uuid, tipo: 'saida', quantidade: quantidade,
+                        estoqueBefore, estoqueAfter,
+                        idProduto: produto.idProduto
+                    }).transacting(trx)
 
                 await trx.commit()
             } catch (error) {
@@ -24,16 +35,27 @@ class Estoque {
     async entrada(quantidade, uuidProduto) {
         await knex.transaction(async (trx) => {
             try {
+
                 const produto = await trx.table('produto')
                     .transacting(trx)
                     .select().where('uuid', '=', uuidProduto).first()
-                const estoque = produto.estoque + quantidade
+
+                const estoqueBefore = produto.estoque
+                const estoqueAfter = produto.estoque + quantidade
 
                 await trx.table('produto')
                     .transacting(trx)
                     .update({
-                        ...produto, estoque: estoque
+                        ...produto, estoque: estoqueAfter
                     }).where('uuid', '=', uuidProduto)
+
+
+                await trx.table('movimentacao')
+                    .insert({
+                        uuid, tipo: 'entrada', quantidade: quantidade,
+                        estoqueBefore, estoqueAfter,
+                        idProduto: produto.idProduto
+                    }).transacting(trx)
 
                 await trx.commit()
             } catch (error) {
