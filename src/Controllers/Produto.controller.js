@@ -60,7 +60,7 @@ class ProdutoController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = 'SELECT nomeProduto,valor,uuid FROM produto ';
+            let sql = 'SELECT nomeProduto,valor,uuid,estoque FROM produto ';
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;
