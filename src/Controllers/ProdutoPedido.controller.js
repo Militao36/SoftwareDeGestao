@@ -4,6 +4,7 @@ import ProdutoPedidoHandleUpdate from '../Handlers/ProdutoPedido/ProdutoPedidoUp
 import ProdutoPedidoRepo from '../Repositories/ProdutoPedido';
 import ProdutoRepo from '../Repositories/Produtos';
 import Estoque from '../Estoque/Estoque';
+
 class ProdutoPedidoController {
     async post(req, res) {
         try {
@@ -46,13 +47,13 @@ class ProdutoPedidoController {
             const uuid = req.params.id;
             const produtoPedido = await ProdutoPedidoRepo.findById(uuid);
             const produto = await ProdutoRepo.findByUuidForIdProduto(produtoPedido.idProduto);
-
+            
             await ProdutoPedidoRepo.delete(uuid);
+        
             // Desfazer a saida do produto pois atualizei o produto no pedido
-            await Estoque.desfazerSaida(produtoPedido.quantidade, produto.uuid)
+            await Estoque.desfazerSaida(produtoPedido.quantidade, produto.uuid, produtoPedido.uuidPedido)
             return res.status(204).json({});
         } catch (error) {
-            console.log(error)
             return res.status(500).send('Erro ao deletar cliente');
         }
     }

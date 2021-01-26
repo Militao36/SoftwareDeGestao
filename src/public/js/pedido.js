@@ -237,6 +237,7 @@ function selectGridProdutosPedido(id = null) {
 
 function limparFormProdutos() {
     document.getElementById('frmProdutosPedido').reset()
+    removeInvalidForm()
 }
 
 function deletarProdutoPedido(uuid) {
@@ -253,7 +254,7 @@ function deletarProdutoPedido(uuid) {
             $("#tableProdutoPedido tbody").empty()
             setTimeout(() => {
                 GridProdutos(document.getElementById('uuid').value)
-            }, 500)
+            }, 100)
         }
     })
 }

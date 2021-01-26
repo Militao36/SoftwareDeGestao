@@ -1,0 +1,5 @@
+Colocar validação para não deixa adicionar dois produtos do mesmo no mesmo pedido.
+
+Ou 
+
+Colocar para quando deletar o produto na venda, caso esteja duplicado o produto ele deletar apenas um mov, pois se tiver duas CAMISA e deletar um deles do pedido ele dela as duas mov da table mov

@@ -1,7 +1,5 @@
 import UsuarioRepo from '../../Repositories/Usuarios';
-
 import ValidatorUser from '../../Validators/Usuario';
-
 import { DateTime } from 'luxon';
 
 class HandleUsuario {

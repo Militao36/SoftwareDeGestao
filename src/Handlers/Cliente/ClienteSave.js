@@ -1,14 +1,14 @@
 import ClienteRepo from '../../Repositories/Clientes';
 import ValidatorCliente from '../../Validators/Cliente';
 import { DateTime } from 'luxon';
-import { uuid } from '../../Utils/uuid';
+import { v4 } from 'uuid';
 
 class HandleCliente {
     Handler = async (cliente, idEmpresa) => {
         const Cliente = {
             ...cliente, idEmpresa,
             createAt: DateTime.local().toSQLDate(),
-            uuid
+            uuid: v4()
         };
 
         const validacoes = ValidatorCliente(Cliente);

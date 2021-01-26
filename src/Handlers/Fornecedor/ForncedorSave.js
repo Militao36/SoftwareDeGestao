@@ -1,14 +1,14 @@
 import FornecedorRepo from '../../Repositories/Fornecedor';
 import ValidatorFornecedor from '../../Validators/Fornecedor';
 import { DateTime } from 'luxon';
-import { uuid } from '../../Utils/uuid';
+import { v4 } from 'uuid';
 
 class HandleFornecedor {
     Handler = async (fornecedor, idEmpresa) => {
         const Fornecedor = {
             ...fornecedor, idEmpresa,
             createAt: DateTime.local().toSQLDate(),
-            uuid
+            uuid: v4()
         };
 
         const validacoes = ValidatorFornecedor(Fornecedor);

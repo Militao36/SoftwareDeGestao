@@ -2,16 +2,14 @@ import ProdutoPedidoRepo from '../../Repositories/ProdutoPedido';
 import ProdutoRepo from '../../Repositories/Produtos';
 import ValidatorProdutosPedidos from '../../Validators/ProdutoPedido';
 import Estoque from '../../Estoque/Estoque';
-
-import { uuid } from '../../Utils/uuid';
+import { v4 } from 'uuid';
 
 class HandleProdutoPedido {
     Handler = async (produtoPedido, idEmpresa) => {
         const produto = await ProdutoRepo.findByIdProduto(produtoPedido.idProduto)
-        
+
         const ProdutoPedido = {
             ...produtoPedido, idEmpresa,
-            uuid,
             idProduto: produto.idProduto || null
         };
 
@@ -19,12 +17,14 @@ class HandleProdutoPedido {
         if (validacoes.length > 0) {
             return validacoes;
         }
+        
+        ProdutoPedido.uuid = v4();
 
         await ProdutoPedidoRepo.save(ProdutoPedido);
 
         // Da a saida do produto
-        await Estoque.saida(produtoPedido.quantidade, produtoPedido.idProduto)
- 
+        await Estoque.saida(produtoPedido.quantidade, produtoPedido.idProduto, produtoPedido.uuidPedido)
+
         return ProdutoPedido.uuid;
     }
 }

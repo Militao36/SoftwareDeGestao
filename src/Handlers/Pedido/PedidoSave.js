@@ -3,7 +3,7 @@ import ValidatorPedido from '../../Validators/Pedido';
 import ClienteRepo from '../../Repositories/Clientes';
 import FuncionarioRepo from '../../Repositories/Funcionario';
 import StatusRepo from '../../Repositories/StatusPedido';
-import { uuid } from '../../Utils/uuid';
+import { v4 } from 'uuid';
 
 class HandlePedido {
     Handler = async (pedido, idEmpresa) => {
@@ -15,7 +15,7 @@ class HandlePedido {
 
         const Pedido = {
             ...pedido, idEmpresa,
-            uuid,
+            uuid: v4(),
             idCliente: null,
             idFuncionario: null,
             idStatusPedido: null,
