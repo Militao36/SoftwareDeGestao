@@ -116,7 +116,9 @@ create table statusPedido(
     idStatusPedido int auto_increment primary key,
     uuid varchar(36),
     idEmpresa int,
-    nomeStatus varchar(20)
+    nomeStatus varchar(20),
+    createAt date,
+    updateAt date
 );
 
 create table pedido (
@@ -128,6 +130,8 @@ create table pedido (
     idStatusPedido int,
     idFuncionario int,
     observacao varchar(30),
+    createAt date,
+    updateAt date,
     FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario),
     FOREIGN KEY (idCliente) REFERENCES cliente (idCliente),
     FOREIGN KEY (idStatusPedido) REFERENCES statusPedido (idStatusPedido)
@@ -142,10 +146,10 @@ create table produtoPedido(
     valor decimal(13,2),
     desconto decimal(13,2),
     observacao varchar(40),
+    createAt date,
+    updateAt date,
     FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
 );
-
-
 
 CREATE VIEW lis_pedido
 AS SELECT 
@@ -164,14 +168,14 @@ INNER JOIN cliente c
 ON p.idCliente = c.idCliente 
 INNER JOIN statusPedido s 
 ON p.idStatusPedido = s.idStatusPedido 
-LEFT JOIN funcionario f on p.idFuncionario = f.idFuncionario
+LEFT JOIN funcionario f on p.idFuncionario = f.idFuncionario;
 
 
 CREATE VIEW lis_produto_pedido
 AS SELECT 
 produtoP.uuid,
 produtoP.quantidade,
-produtoP.uuidPedido as uuidPedido,
+produtoP.uuid as uuidPedido,
 produtoP.idEmpresa,
 produtoP.valor,
 produtoP.desconto,
@@ -179,4 +183,23 @@ p.nomeProduto,
 p.uuid as uuidProduto
 FROM produtoPedido produtoP
 INNER JOIN produto p
-ON produtoP.idProduto = p.idProduto
+ON produtoP.idProduto = p.idProduto;
+
+
+create table tipoPagamento( 
+    idTipoPagamento int auto_increment primary key,
+    uuid varchar(36),
+    idEmpresa int,
+    tipo varchar(20),
+    createAt date,
+    updateAt date
+);
+
+create table caixa(
+    idCaixa int auto_increment primary key,
+    uuid varchar(36),
+    idTipoPagamento int,
+    tipo enum('entrada','saida','sangria','ajuste'),
+    valor decimal(13,2),
+
+);

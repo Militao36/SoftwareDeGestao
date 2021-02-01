@@ -1,9 +1,14 @@
 import StatusPedidoRepo from '../../Repositories/StatusPedido';
 import ValidatorStatusPedido from '../../Validators/StatusPedido';
+import { DateTime } from 'luxon'
 
 class HandleStatusPedido {
     Handler = async (statusPeidod, idEmpresa) => {
-        const StatusPedido = { ...statusPeidod, idEmpresa };
+        const StatusPedido = {
+            ...statusPeidod, 
+            idEmpresa,
+            updateAt: DateTime.local().toSQLDate()
+        };
 
         const validacoes = ValidatorStatusPedido(StatusPedido);
         if (validacoes.length > 0) {

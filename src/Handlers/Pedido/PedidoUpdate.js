@@ -3,6 +3,7 @@ import ValidatorPedido from '../../Validators/Pedido';
 import ClienteRepo from '../../Repositories/Clientes';
 import FuncionarioRepo from '../../Repositories/Funcionario';
 import StatusRepo from '../../Repositories/StatusPedido';
+import { DateTime } from 'luxon'
 
 class HandlePedido {
     Handler = async (pedido, idEmpresa) => {
@@ -17,6 +18,7 @@ class HandlePedido {
             idCliente: null,
             idFuncionario: null,
             idStatusPedido: null,
+            updateAt: DateTime.local().toSQLDate()
         };
 
 

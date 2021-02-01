@@ -3,6 +3,7 @@ import ProdutoRepo from '../../Repositories/Produtos';
 import ValidatorProdutosPedidos from '../../Validators/ProdutoPedido';
 import Estoque from '../../Estoque/Estoque';
 import { v4 } from 'uuid';
+import { DateTime } from 'luxon'
 
 class HandleProdutoPedido {
     Handler = async (produtoPedido, idEmpresa) => {
@@ -10,7 +11,8 @@ class HandleProdutoPedido {
 
         const ProdutoPedido = {
             ...produtoPedido, idEmpresa,
-            idProduto: produto.idProduto || null
+            idProduto: produto.idProduto || null,
+            createAt: DateTime.local().toSQLDate()
         };
 
         const validacoes = await ValidatorProdutosPedidos(ProdutoPedido);

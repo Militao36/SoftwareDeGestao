@@ -4,6 +4,7 @@ import ClienteRepo from '../../Repositories/Clientes';
 import FuncionarioRepo from '../../Repositories/Funcionario';
 import StatusRepo from '../../Repositories/StatusPedido';
 import { v4 } from 'uuid';
+import { DateTime } from 'luxon'
 
 class HandlePedido {
     Handler = async (pedido, idEmpresa) => {
@@ -19,6 +20,7 @@ class HandlePedido {
             idCliente: null,
             idFuncionario: null,
             idStatusPedido: null,
+            createAt: DateTime.local().toSQLDate()
         };
 
         if (cliente[0].length > 0) {
