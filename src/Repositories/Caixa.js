@@ -10,11 +10,15 @@ class Caixa {
     }
 
     delete(uuid) {
-        return knex('caixa').delete().where('uuid', '=', uuid);
+        return knex('caixa')
+            .delete()
+            .where('uuid', '=', uuid);
     }
 
     findById(uuid) {
-        return knex('caixa').select().where('uuid', '=', uuid).first();
+        return knex('lis_caixa')
+            .select(['idTipoPagamento', 'tipo', 'valor', 'descricao', 'uuid'])
+            .where('uuid', '=', uuid).first();
     }
 
 

@@ -38,13 +38,24 @@
               <br>
               <form id="frmCaixa">
                 <div class="row">
+                  <div class="col-md-12" style="display: none;">
+                    <input type="text" id="uuid" class="form-control">
+                  </div>
                   <div class="col-md-12">
-                    <select class="form-control" id="idTipoPagamento ">
-                      <option value='1'>Dinheiro</option>
-                    </select>
-                    <div id="IidTipoPagamento " style="display: none;">
-                      Looks good!
+                    <div class="input-group mb-3">
+                      <select class="form-control" id="idTipoPagamento">
+                        <% for(let i=0; i < tipoPagamento.length;i++){ %>
+                          <option value="<%= tipoPagamento[i].uuid %>">
+                            <%= tipoPagamento[i].tipo %>
+                          </option>
+                          <% }%>
+                      </select>
+                      <div id="IidTipoPagamento " style="display: none;">
+                        Looks good!
+                      </div>
+                      <span class="input-group-text" id="cadastrarFormaPagamento">+</span>
                     </div>
+
                   </div>
                   <div class="col-md-6">
                     <select style="margin-top:10px" class="form-control" id="tipo">
@@ -76,13 +87,24 @@
           </div>
           <button class="btn btn-success" style="margin-top:10px" id="btnSalvar">Salvar</button>
           <button class="btn btn-secondary" style="margin-top:10px" id="btnNovo">Novo</button>
+          <button class="btn btn-danger" style="margin-top:10px" id="btnDeletar">Deletar</button>
         </div>
         <div class="col-md-6">
-          <table class="table table-dark" id="tableEstoque">
+          <div class="pesquisa">
+            <input type="text" id="txtPesquisa" class="form-control" placeholder="Pesquisar"
+              style="margin-bottom: 10px;">
+            <select class="form-control" id="selectColuna">
+              <option value="tipoPagamento">Forma Pagamento</option>
+              <option value="tipo">Tipo Movimentação</option>
+              <option value="valor">Valor</option>
+            </select>
+          </div>
+          <table class="table table-dark" id="tableCaixa">
             <thead>
               <tr>
-                <th scope="col-md">Nome</th>
-                <th scope="col-md">Estoque</th>
+                <th scope="col-md">Forma Pagamento</th>
+                <th scope="col-md">Tipo Mov</th>
+                <th scope="col-md">Valor</th>
               </tr>
             </thead>
             <tbody>

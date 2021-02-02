@@ -40,3 +40,8 @@ a {
     transform-origin: top;
     cursor: pointer;
   }
+
+  #cadastrarFormaPagamento{
+    cursor: pointer;
+    margin-left: 5px;
+  }

@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test-dev": "set TEST=true && jest",
+    "test": "set TEST=true && jest",
     "start": "node dist/server",
     "dev": "nodemon src/server.js"
   },

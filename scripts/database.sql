@@ -197,10 +197,27 @@ create table tipoPagamento(
 
 create table caixa(
     idCaixa int auto_increment primary key,
+    idEmpresa int,
     uuid varchar(36),
     idTipoPagamento int,
     tipo enum('entrada','saida','sangria','ajuste'),
     valor decimal(13,2),
     descricao varchar(50),
+    createAt date,
+    updateAt date,
     FOREIGN KEY (idTipoPagamento) REFERENCES tipoPagamento (idTipoPagamento)
 );
+
+
+CREATE VIEW lis_caixa
+AS SELECT 
+c.uuid as uuid,
+c.idEmpresa,
+c.tipo,
+c.valor,
+c.descricao,
+tP.uuid as idTipoPagamento,
+tP.tipo as tipoPagamento
+FROM caixa c
+INNER JOIN tipopagamento tP
+ON c.idTipoPagamento  = tP.idTipoPagamento ;
