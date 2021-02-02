@@ -201,5 +201,6 @@ create table caixa(
     idTipoPagamento int,
     tipo enum('entrada','saida','sangria','ajuste'),
     valor decimal(13,2),
-
+    descricao varchar(50),
+    FOREIGN KEY (idTipoPagamento) REFERENCES tipoPagamento (idTipoPagamento)
 );
