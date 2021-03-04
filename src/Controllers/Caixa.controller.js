@@ -57,7 +57,21 @@ class CaixaController {
             const caixa = await CaixaRepo.findById(uuid);
             return res.status(200).json({ caixa: caixa });
         } catch (error) {
-            console.log(error)
+            return res.status(500).send('Erro ao pesquisar movimentação do caixa.');
+        }
+    }
+
+    async getMov(req, res) {
+        try {
+            const { date } = req.body;
+            const caixa = await CaixaRepo.getMovDay(date, req.idEmpresa);
+            return res.status(200).json({
+                caixa: caixa.map(v => {
+                    delete v.idEmpresa;
+                    return { ...v }
+                })
+            });
+        } catch (error) {
             return res.status(500).send('Erro ao pesquisar movimentação do caixa.');
         }
     }

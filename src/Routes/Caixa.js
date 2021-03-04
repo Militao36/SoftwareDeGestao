@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', caixa.post);
+router.post('/movimentacao', caixa.getMov);
+
 router.put('/:id', caixa.put);
 router.delete('/:id', caixa.delete);
 router.get('/:id', caixa.findById);
