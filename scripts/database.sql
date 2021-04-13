@@ -142,13 +142,15 @@ create table produtoPedido(
     uuid varchar(36),
     idEmpresa int,
     idProduto int,
+    idPedido int,
     quantidade int,
     valor decimal(13,2),
     desconto decimal(13,2),
     observacao varchar(40),
     createAt date,
     updateAt date,
-    FOREIGN KEY (idProduto) REFERENCES produto (idProduto)
+    FOREIGN KEY (idProduto) REFERENCES produto (idProduto),
+    FOREIGN KEY (idPedido) REFERENCES pedido (idPedido)
 );
 
 CREATE VIEW lis_pedido
@@ -173,17 +175,18 @@ LEFT JOIN funcionario f on p.idFuncionario = f.idFuncionario;
 
 CREATE VIEW lis_produto_pedido
 AS SELECT 
+produtoP.idEmpresa,
 produtoP.uuid,
 produtoP.quantidade,
-produtoP.uuid as uuidPedido,
-produtoP.idEmpresa,
 produtoP.valor,
-produtoP.desconto,
 p.nomeProduto,
-p.uuid as uuidProduto
+p.uuid as uuidProduto,
+pd.uuid as uuidPedido
 FROM produtoPedido produtoP
 INNER JOIN produto p
-ON produtoP.idProduto = p.idProduto;
+ON produtoP.idProduto = p.idProduto
+INNER JOIN pedido pd 
+on produtoP.idPedido = pd.idPedido
 
 
 create table tipoPagamento( 

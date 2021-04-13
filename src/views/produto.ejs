@@ -65,9 +65,9 @@
                   <div class="col-md-12">
                     <select class="form-control" id="idFornecedor">
                       <option value='null'>--- Selecione o Fornecedor ---</option>
-                      <% for(let i=0; i < forncedor.length;i++){ %>
-                        <option value="<%= forncedor[i].uuid %>">
-                          <%= forncedor[i].razaoSocial %>
+                      <% for(let i=0; i < fornecedor.length;i++){ %>
+                        <option value="<%= fornecedor[i].uuid %>">
+                          <%= fornecedor[i].razaoSocial %>
                         </option>
                         <% }%>
                     </select>

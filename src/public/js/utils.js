@@ -50,3 +50,14 @@ function removeInvalidForm() {
         elements[0].classList.remove('invalid-feedback')
     }
 }
+
+/**
+ * @param {String} value 
+ * @returns {Number}
+ */
+function decimalParser(value) {
+    if (typeof (value) !== 'string')
+        throw Error('Valor passado deve ser string');
+
+    return parseFloat(value.replace(/\./g, "").replace(",", "."))
+}

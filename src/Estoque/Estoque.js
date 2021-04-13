@@ -74,12 +74,16 @@ class Estoque {
     async desfazerSaida(quantidade, uuidProduto, ref) {
         await knex.transaction(async (trx) => {
             try {
-                const produto = await trx.table('produto').select().where('uuid', '=', uuidProduto).first()
-                const estoqueAfter = produto.estoque + quantidade
+                const produto = await trx.table('produto').select()
+                    .where('uuid', '=', uuidProduto).first()
+                const estoqueAfter = Number(produto.estoque) + Number(quantidade)
 
-                await trx.table('produto').update({
-                    ...produto, estoque: estoqueAfter
-                }).where('uuid', '=', uuidProduto).transacting(trx)
+                await trx.table('produto')
+                    .update({
+                        ...produto, estoque: estoqueAfter
+                    })
+                    .where('uuid', '=', uuidProduto)
+                    .transacting(trx)
 
                 await trx.table('movimentacao')
                     .delete()
@@ -89,6 +93,7 @@ class Estoque {
 
                 await trx.commit()
             } catch (error) {
+                console.log(error);
                 await trx.rollback()
             }
         })
@@ -98,7 +103,7 @@ class Estoque {
         await knex.transaction(async (trx) => {
             try {
                 const produto = await trx.table('produto').select().where('uuid', '=', uuidProduto).first()
-                const estoqueAfter = produto.estoque - quantidade
+                const estoqueAfter = Number(produto.estoque) - Number(quantidade)
 
                 await trx.table('produto')
                     .update({

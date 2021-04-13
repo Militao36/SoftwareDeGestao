@@ -3,15 +3,16 @@ import ProdutoPedidoHandleSave from '../Handlers/ProdutoPedido/ProdutoPedidoSave
 import ProdutoPedidoHandleUpdate from '../Handlers/ProdutoPedido/ProdutoPedidoUpdate';
 import ProdutoPedidoRepo from '../Repositories/ProdutoPedido';
 import ProdutoRepo from '../Repositories/Produtos';
+import PedidoRepo from '../Repositories/Pedido';
 import Estoque from '../Estoque/Estoque';
 
 class ProdutoPedidoController {
     async post(req, res) {
         try {
-            const { idProduto, quantidade, valor, desconto, observacao, uuidPedido } = req.body;
+            const { idProduto, quantidade, valor, desconto, observacao, idPedido } = req.body;
 
             const result = await ProdutoPedidoHandleSave.Handler({
-                idProduto, quantidade, valor, desconto, observacao, uuidPedido
+                idProduto, quantidade, valor, desconto, observacao, idPedido
             }, req.idEmpresa);
 
             if (Array.isArray(result)) {
@@ -20,16 +21,17 @@ class ProdutoPedidoController {
 
             return res.status(201).json({ id: result });
         } catch (error) {
+            console.log(error);
             return res.status(500).send('Ocorreu um erro ao adicionar produto.')
         }
     }
 
     async put(req, res) {
         try {
-            const { idProduto, quantidade, valor, desconto, observacao, uuidPedido } = req.body;
+            const { idProduto, quantidade, valor, desconto, observacao, idPedido } = req.body;
 
             const result = await ProdutoPedidoHandleUpdate.Handler({
-                idProduto, quantidade, valor, desconto, observacao, uuidPedido,
+                idProduto, quantidade, valor, desconto, observacao, idPedido,
                 uuid: req.params.id,
             }, req.idEmpresa);
 
@@ -38,6 +40,7 @@ class ProdutoPedidoController {
             }
             return res.status(204).json();
         } catch (error) {
+            console.log(error);
             return res.status(500).send('Ocorreu um erro ao atualizar o produto.')
         }
     }
@@ -46,12 +49,21 @@ class ProdutoPedidoController {
         try {
             const uuid = req.params.id;
             const produtoPedido = await ProdutoPedidoRepo.findById(uuid);
-            const produto = await ProdutoRepo.findByUuidForIdProduto(produtoPedido.idProduto);
+
+            if (produtoPedido) {
+                return res.status(400).json('Erro ao pesquisar pedido.');
+            }
             
-            await ProdutoPedidoRepo.delete(uuid);
-        
-            // Desfazer a saida do produto pois atualizei o produto no pedido
-            await Estoque.desfazerSaida(produtoPedido.quantidade, produto.uuid, produtoPedido.uuidPedido)
+            const [produto, pedido] = await Promise.all([
+                ProdutoRepo.findByUuidForIdProduto(produtoPedido.idProduto),
+                PedidoRepo.findByIdPedidoToID(produtoPedido.idPedido),
+            ])
+
+            await Promise.all([
+                ProdutoPedidoRepo.delete(uuid),
+                Estoque.desfazerSaida(produtoPedido.quantidade, produto.uuid, pedido.uuid)
+            ])
+
             return res.status(204).json({});
         } catch (error) {
             return res.status(500).send('Erro ao deletar cliente');
@@ -69,9 +81,8 @@ class ProdutoPedidoController {
                     uuidproduto: produtoPedido.uuid,
                     idProduto: produto.uuid,
                     quantidade: produtoPedido.quantidade,
-                    valor: String(produtoPedido.valor).split('.').length == 2 ?
-                        String(produtoPedido.valor).replace('.', ',') : `${produtoPedido.valor},00`,
-                    desconto: produtoPedido.desconto,
+                    valor: produtoPedido.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
+                    desconto: produtoPedido.desconto.toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
                     "produto.observacao": produtoPedido.observacao,
                 }
             });

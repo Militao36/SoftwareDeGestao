@@ -5,12 +5,12 @@ import { DateTime } from 'luxon';
 
 class HandleProduto {
     Handler = async (produto, idEmpresa) => {
-        const fornecdor = await FornecedorRepo.findByUUID(produto.idFornecedor)
+        const fornecedor = await FornecedorRepo.findByUUID(produto?.idFornecedor)
 
         const Produto = {
             ...produto, idEmpresa,
             updateAt: DateTime.local().toSQLDate(),
-            idFornecedor: fornecdor.idFornecedor || null
+            idFornecedor: fornecedor?.idFornecedor ?? null
         };
 
         const validacoes = await ValidatorProduto(Produto);

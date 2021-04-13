@@ -7,9 +7,8 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
         idStatusPedido: document.getElementById('idStatusPedido').value || null,
         idFuncionario: document.getElementById('idFuncionario').value || null,
         valorComissao: document.getElementById('valorComissao').value,
-        observacao: document.getElementById('observacao').value,
+        observacao: document.getElementById('observacao').value
     }
-
 
     removeInvalidForm()
     const id = document.getElementById('uuid').value
@@ -133,7 +132,7 @@ $('#desconto').mask('000.000.000.000.000,00', {
 document.getElementById('btnSalvarProdutos').addEventListener('click', (e) => {
     e.preventDefault();
 
-    removeInvalidForm()
+    // removeInvalidForm()
 
     const data = {
         idProduto: document.getElementById('idProduto').value,
@@ -141,25 +140,11 @@ document.getElementById('btnSalvarProdutos').addEventListener('click', (e) => {
         valor: document.getElementById('valor').value,
         desconto: document.getElementById('desconto').value,
         observacao: document.getElementById('produto.observacao').value,
-        uuidPedido: document.getElementById('uuid').value
+        idPedido: document.getElementById('uuid').value
     }
 
-    if (String(data.valor).split(',').length !== 2) {
-        invalidForm([
-            { valor: 'O campo valor, deve conter duas casas decimais e não pode ficar em branco.' }
-        ])
-        return;
-    }
-
-    if (String(data.desconto).split(',').length !== 2 && data.desconto !== "") {
-        invalidForm([
-            { desconto: 'O campo desconto, deve conter duas casas decimais.' }
-        ])
-        return;
-    }
-
-    data.valor = data.valor.replace('.', '').replace(',', '.')
-    data.desconto = data.desconto.replace('.', '').replace(',', '.')
+    data.valor = decimalParser(String(data.valor))
+    data.desconto = decimalParser(String(data.desconto))
 
 
     const uuidProduto = document.getElementById('uuidproduto').value;
@@ -207,8 +192,8 @@ function updateProdutos(data, uuid) {
         })
 }
 
-function GridProdutos(uuidPedido) {
-    axios.get(`/Produto/Pedido/Search/${uuidPedido}`)
+function GridProdutos(idPedido) {
+    axios.get(`/Produto/Pedido/Search/${idPedido}`)
         .then(async (response) => {
             const { data } = response.data;
             $("#tableProdutoPedido tbody").empty()
@@ -217,7 +202,7 @@ function GridProdutos(uuidPedido) {
                     <tr onclick="selectGridProdutosPedido('${item.uuid}')"> 
                         <td>${item.nomeProduto}</td> 
                         <td>${item.quantidade}</td>
-                        <td>${item.valor}</td>
+                        <td>${item.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
                     </tr>
                 `);
             }
@@ -240,21 +225,25 @@ function limparFormProdutos() {
     removeInvalidForm()
 }
 
-function deletarProdutoPedido(uuid) {
-    swal({
+async function deletarProdutoPedido(uuid) {
+
+    const isConfirm = await swal({
         title: "Tem certeza que quer deletar este registro?",
         text: "O registro será deletado definitivamente!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
-    }).then((isConfirm) => {
-        if (isConfirm) {
-            api.delete('/Produto/Pedido/' + uuid)
-            limparFormProdutos()
-            $("#tableProdutoPedido tbody").empty()
-            setTimeout(() => {
-                GridProdutos(document.getElementById('uuid').value)
-            }, 100)
-        }
     })
+
+    if (!isConfirm) {
+        return;
+    }
+    api.delete('/Produto/Pedido/' + uuid)
+        .then((result) => {
+            limparFormProdutos()
+            GridProdutos(document.getElementById('uuid').value)
+        }).catch((error) => {
+            const message = error.response?.data ?? "Ocorreu um erro, entre em contato com a empresa";
+            swal(message, "", "warning");
+        })
 }

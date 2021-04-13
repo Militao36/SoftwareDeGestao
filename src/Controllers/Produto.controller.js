@@ -45,11 +45,11 @@ class ProdutoController {
         try {
             const uuid = req.params.id;
             const produto = await ProdutoRepo.findById(uuid);
-            const fornecedor = await FornecedorRepo.findByIdFornecedor(produto.idFornecedor)
+            const fornecedor = await FornecedorRepo.findByIdFornecedor(produto?.idFornecedor)
             return res.status(200).json({
                 produto: {
                     ...produto,
-                    idFornecedor: fornecedor.uuid || null
+                    idFornecedor: fornecedor?.uuid ?? null
                 }
             });
         } catch (error) {
