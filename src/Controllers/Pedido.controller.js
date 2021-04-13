@@ -65,7 +65,7 @@ class PedidoController {
     async buscarFiltro(req, res) {
         try {
             const idEmpresa = req.idEmpresa;
-            let sql = `SELECT nomeCliente,dataPedido,nomeStatus,uuid FROM lis_pedido `;
+            let sql = `SELECT nomeCliente,DATE_FORMAT(dataPedido, "%d/%m/%Y") as dataPedido,nomeStatus,uuid FROM lis_pedido `;
 
             if (req.params.text !== 'null') {
                 sql += `WHERE ${req.params.coluna} like '%${req.params.text}%'`;

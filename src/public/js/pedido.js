@@ -6,7 +6,6 @@ document.getElementById('btnSalvar').addEventListener('click', (e) => {
         dataPedido: document.getElementById('dataPedido').value || null,
         idStatusPedido: document.getElementById('idStatusPedido').value || null,
         idFuncionario: document.getElementById('idFuncionario').value || null,
-        valorComissao: document.getElementById('valorComissao').value,
         observacao: document.getElementById('observacao').value
     }
 
@@ -67,7 +66,6 @@ function atualizarProduto(data, id) {
 
 function limparForm() {
     document.getElementById('frmPedido').reset()
-    $("#tablePedido tbody").empty()
 }
 
 function deletarPedido(uuid) {
@@ -111,7 +109,7 @@ function Grid(coluna, text) {
                 $("#tablePedido tbody").append(`
                     <tr onclick="selectGridPedido('${item.uuid}')"> 
                         <td>${item.nomeCliente}</td> 
-                        <td>${new Date(item.dataPedido).toLocaleDateString()}</td>
+                        <td>${item.dataPedido}</td>
                         <td>${item.nomeStatus}</td>
                     </tr>
                 `);

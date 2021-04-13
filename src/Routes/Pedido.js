@@ -10,19 +10,12 @@ const router = Router();
 const Pedido = new PedidoController();
 
 router.get('/', async (req, res) => {
-    const clientes = await ClienteRepo.buscarFiltro(
-        `select nome,uuid from cliente where idEmpresa = '${req.idEmpresa}'`
-    )
-    const status = await StatusRepo.buscarFiltro(`
-        select uuid,nomeStatus from statusPedido where idEmpresa = '${req.idEmpresa}'`
-    )
-    const funcionario = await FuncionarioRepo.buscarFiltro(`
-        select uuid,nome,comissao from funcionario where idEmpresa = '${req.idEmpresa}'`
-    )
-
-    const produto = await ProdutoRepo.buscarFiltro(`
-        select uuid,nomeProduto from produto where idEmpresa = '${req.idEmpresa}'`
-    )
+    const [clientes, status, funcionario, produto] = await Promise.all([
+        ClienteRepo.buscarFiltro(`select nome,uuid from cliente where idEmpresa = '${req.idEmpresa}'`),
+        StatusRepo.buscarFiltro(`select uuid,nomeStatus from statusPedido where idEmpresa = '${req.idEmpresa}'`),
+        FuncionarioRepo.buscarFiltro(`select uuid,nome,comissao from funcionario where idEmpresa = '${req.idEmpresa}'`),
+        ProdutoRepo.buscarFiltro(`select uuid,nomeProduto from produto where idEmpresa = '${req.idEmpresa}'`)
+    ])
 
     return res.render('pedido', {
         title: 'BMS Optica',

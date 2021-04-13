@@ -80,8 +80,7 @@
                                         <select class="form-control" id="idFuncionario">
                                             <option value=''>--- Selecione o Funcionario ---</option>
                                             <% for(let i=0; i < funcionario.length;i++){ %>
-                                                <option data-comissao="<%= funcionario[i].comissao %>"
-                                                    value="<%= funcionario[i].uuid %>">
+                                                <option value="<%= funcionario[i].uuid %>">
                                                     <%= funcionario[i].nome %>
                                                 </option>
                                                 <% }%>
@@ -90,16 +89,9 @@
                                             Looks good!
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="number" id="valorComissao" maxlength="100" class="form-control"
-                                            placeholder="Comissão" disabled>
-                                        <div id="IvalorComissao" style="display: none;">
-                                            Looks good!
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text" id="observacao" maxlength="100" class="form-control"
-                                            placeholder="Observação">
+                                    <div class="col-md-12">
+                                        <textarea rows="2" style="margin-top: 10px;" id="observacao" maxlength="100"
+                                            class="form-control" placeholder="Observação"></textarea>
                                         <div id="Iobservacao" style="display: none;">
                                             Looks good!
                                         </div>

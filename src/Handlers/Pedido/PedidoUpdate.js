@@ -8,16 +8,16 @@ import { DateTime } from 'luxon'
 class HandlePedido {
     Handler = async (pedido, idEmpresa) => {
         const [cliente, funcionario, statusPedido] = await Promise.all([
-            await ClienteRepo.buscarFiltro(`select idCliente,uuid from cliente where uuid = '${pedido.idCliente || -1}'`),
-            await FuncionarioRepo.buscarFiltro(`select idFuncionario,uuid from funcionario where uuid = '${pedido.idFuncionario || -1}'`),
-            await StatusRepo.buscarFiltro(`select idStatusPedido,uuid from statusPedido where uuid = '${pedido.idStatusPedido || -1}'`)
+            await ClienteRepo.buscarFiltro(`select idCliente,uuid from cliente where uuid = '${pedido?.idCliente}'`),
+            await FuncionarioRepo.buscarFiltro(`select idFuncionario,uuid from funcionario where uuid = '${pedido?.idFuncionario}'`),
+            await StatusRepo.buscarFiltro(`select idStatusPedido,uuid from statusPedido where uuid = '${pedido?.idStatusPedido}'`)
         ])
 
         const Pedido = {
             ...pedido, idEmpresa,
-            idCliente: null,
-            idFuncionario: null,
-            idStatusPedido: null,
+            idCliente: cliente[0]?.idCliente,
+            idFuncionario: funcionario[0]?.idFuncionario,
+            idStatusPedido: statusPedido[0]?.idStatusPedido,
             updateAt: DateTime.local().toSQLDate()
         };
 
