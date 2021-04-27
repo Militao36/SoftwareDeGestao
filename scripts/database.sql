@@ -223,4 +223,23 @@ tP.uuid as idTipoPagamento,
 tP.tipo as tipoPagamento
 FROM caixa c
 INNER JOIN tipopagamento tP
-ON c.idTipoPagamento  = tP.idTipoPagamento ;
+ON c.idTipoPagamento  = tP.idTipoPagamento;
+
+
+create table duplicatasReceber(
+    idDuplicata int auto_increment primary key,
+    numeroDuplicata varchar(10),
+    idCliente int,
+    idTipoPagamento int,
+    idFuncionario int,
+    comissao decimal(13,2),
+    dataEmissao date,
+    dataVencimento date,
+    dataPagamento date,
+    valorTotal decimal(13,2),
+    valorDevedor decimal(13,2),
+    observacao varchar(50),
+    FOREIGN KEY (idCliente) REFERENCES cliente (idCliente),
+    FOREIGN KEY (idTipoPagamento) REFERENCES tipoPagamento (idTipoPagamento),
+    FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario)
+);
