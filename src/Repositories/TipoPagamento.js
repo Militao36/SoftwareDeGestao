@@ -20,7 +20,7 @@ class TipoPagamento {
     }
 
     findByIdTipoPagamento(uuid) {
-        return knex('tipoPagamento').select(
+        return knex().table('tipoPagamento').select(
             ["uuid", "idTipoPagamento"]
         ).where('uuid', '=', uuid).first()
     }

@@ -6,13 +6,13 @@ class DuplicatasReceber {
     async post(req, res) {
         try {
             const { idCliente, idTipoPagamento, idFuncionario,
-                comissao, dataEmissao, dataVencimento, dataVencimento, dataPagamento,
-                valorTotal, valorDevedor, observacao } = req.body
+                comissao, dataEmissao, dataVencimento, dataPagamento,
+                valorTotal, valorPago, valorDevedor, observacao } = req.body
 
             const result = await HandleSave.Handler({
                 idCliente, idTipoPagamento, idFuncionario,
-                comissao, dataEmissao, dataVencimento, dataVencimento, dataPagamento,
-                valorTotal, valorDevedor, observacao
+                comissao, dataEmissao, dataVencimento, dataPagamento,
+                valorTotal, valorPago, valorDevedor, observacao
             }, req.idEmpresa);
 
             if (Array.isArray(result)) {
@@ -20,6 +20,7 @@ class DuplicatasReceber {
             }
             return res.status(201).json({ id: result });
         } catch (error) {
+            console.log(error)
             return res.status(500).send('Ocorreu um erro ao salvar duplicata.');
         }
     }
@@ -27,14 +28,14 @@ class DuplicatasReceber {
     async put(req, res) {
         try {
             const { idCliente, idTipoPagamento, idFuncionario,
-                comissao, dataEmissao, dataVencimento, dataVencimento, dataPagamento,
-                valorTotal, valorDevedor, observacao } = req.body
+                comissao, dataEmissao, dataVencimento, dataPagamento,
+                valorTotal, valorPago, valorDevedor, observacao } = req.body
 
             const result = await HandleUpdate.Handler({
                 idCliente, idTipoPagamento, idFuncionario,
-                comissao, dataEmissao, dataVencimento,
+                comissao, dataEmissao,
                 dataVencimento, dataPagamento,
-                valorTotal, valorDevedor, observacao,
+                valorTotal, valorPago, valorDevedor, observacao,
                 uuid: req.params.id,
             }, req.idEmpresa);
 

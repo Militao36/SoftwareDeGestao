@@ -10,6 +10,7 @@ import Home from "./Home";
 import Estoque from "./Estoque";
 import ProdutoPedido from "./ProdutoPedido";
 import Caixa from "./Caixa";
+import DuplicatasReceber from "./DuplicatasReceber";
 
 const router = Router();
 
@@ -24,6 +25,7 @@ router.use("/Pedido", Pedido);
 router.use("/Estoque", Estoque);
 router.use("/Produto/Pedido", ProdutoPedido);
 router.use("/Caixa", Caixa);
+router.use("/Duplicatas/receber", DuplicatasReceber)
 router.get("/version", (req, res) => res.json({ versao: "1.0.0" }));
 
 export default router;

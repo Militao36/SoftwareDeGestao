@@ -1,0 +1,16 @@
+POST http://localhost:3030/Duplicatas/receber
+Content-Type: application/json
+
+{
+  "idCliente":"e29d69f6-e2f5-4539-bc65-3d8bd4944bee", 
+  "idTipoPagamento":"f8b31312-e50f-475c-9409-636f782ff636", 
+  "idFuncionario":"6b5b50d0-760b-427c-9374-575dfbf82643",
+  "comissao":"", 
+  "dataEmissao":"2020-05-04", 
+  "dataVencimento":"2020-06-04", 
+  "dataPagamento":null,
+  "valorTotal":10.20, 
+  "valorPago":0,
+  "valorDevedor":10.20, 
+  "observacao":""
+}

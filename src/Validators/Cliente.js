@@ -3,7 +3,7 @@ import { IsEmail } from '../Utils/isEmail';
 export default (cliente) => {
     const erros = [];
 
-    if (cliente.nome == '') {
+    if (cliente.nome === null) {
         erros.push({
             nome: 'O campo nome não pode ficar em branco.'
         })
