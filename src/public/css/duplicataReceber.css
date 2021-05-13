@@ -1,0 +1,46 @@
+a {
+    text-decoration: none;
+    color: black;
+  }
+
+  a:hover {
+    color: black;
+  }
+
+  input {
+    margin-top: 10px;
+  }
+
+  .pesquisa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pesquisa select {
+    width: 40%;
+    margin-left: 5px;
+  }
+
+  @keyframes anim {
+    0% {
+      transform: scaleY(0);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+  tr {
+    display: table-row;
+    animation: anim 0.5s ease-in-out;
+    transform-origin: top;
+    cursor: pointer;
+  }
+
+  select{
+    margin-top: 10px;
+  }
+
+  #selectColuna{
+    margin-top: 0px;
+  }

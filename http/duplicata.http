@@ -1,16 +1,18 @@
-POST http://localhost:3030/Duplicatas/receber
-Content-Type: application/json
+# POST http://localhost:3030/Duplicatas/receber
+# Content-Type: application/json
 
-{
-  "idCliente":"32148436-8f03-48de-84cb-78994f14bef6", 
-  "idTipoPagamento":"b54dd605-569f-4a67-95a8-48c0fd8a1eb0", 
-  "idFuncionario":"e0b6edc7-02b8-4e23-ad0d-209d4875e01c",
-  "comissao":"", 
-  "dataEmissao":"2020-05-04", 
-  "dataVencimento":"2020-06-04", 
-  "dataPagamento":null,
-  "valorTotal":10.20, 
-  "valorPago":0,
-  "valorDevedor":10.20, 
-  "observacao":""
-}
+# {
+#   "idCliente":"32148436-8f03-48de-84cb-78994f14bef6", 
+#   "idTipoPagamento":"b54dd605-569f-4a67-95a8-48c0fd8a1eb0", 
+#   "idFuncionario":"e0b6edc7-02b8-4e23-ad0d-209d4875e01c",
+#   "comissao":"", 
+#   "dataEmissao":"2020-05-04", 
+#   "dataVencimento":"2020-06-04", 
+#   "dataPagamento":null,
+#   "valorTotal":10.20, 
+#   "valorPago":0,
+#   "valorDevedor":10.20, 
+#   "observacao":""
+# }
+
+GET http://localhost:3030/Duplicatas/receber/f402568c-85c8-4b20-bd3c-d3c5935d571c

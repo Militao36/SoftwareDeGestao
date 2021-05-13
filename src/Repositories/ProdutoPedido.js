@@ -14,7 +14,6 @@ class ProdutoPedido {
     }
 
     findById(uuid) {
-        console.log(knex('produtoPedido').select().where('uuid', '=', uuid).first().toQuery());
         return knex('produtoPedido').select().where('uuid', '=', uuid).first();
     }
 

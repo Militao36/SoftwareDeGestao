@@ -1,8 +1,8 @@
 import express from 'express';
+import path from 'path';
+import Auth from './Middlewares/Auth';
+import ConvertEmptyStringsToNull from './Middlewares/ConvertEmptyStringsToNull';
 import Routes from './Routes/routes';
-import path from 'path'
-import Auth from './Middlewares/Auth'
-import ConvertEmptyStringsToNull from './Middlewares/ConvertEmptyStringsToNull'
 
 class App {
     constructor() {

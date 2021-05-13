@@ -50,7 +50,7 @@ class DuplicatasReceber {
 
     async delete(req, res) {
         try {
-            const uuid = req.params.id;
+            const uuid = String(req.params.id);
             await DuplicataRepo.delete(uuid);
             return res.status(204).json({});
         } catch (error) {
@@ -64,6 +64,7 @@ class DuplicatasReceber {
             const duplicata = await DuplicataRepo.findById(uuid);
             return res.status(200).json({ duplicata });
         } catch (error) {
+            console.log(error)
             return res.status(500).send('Ocorreu um erro ao pesquisa duplicata.');
         }
     }
