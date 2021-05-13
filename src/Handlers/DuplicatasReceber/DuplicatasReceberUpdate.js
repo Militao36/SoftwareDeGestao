@@ -1,24 +1,29 @@
 
 import { DateTime } from 'luxon';
-import DuplicataRepo from '../../Repositories/DuplicatasReceber'
+import { v4 } from 'uuid';
+import ClienteRepo from '../../Repositories/Clientes';
+import DuplicataRepo from '../../Repositories/DuplicatasReceber';
+import FuncionarioRepo from '../../Repositories/Funcionario';
+import TipoPagamentoRepo from '../../Repositories/TipoPagamento';
+import ValidadorDuplicata from '../../Validators/duplicatasReceber';
 
 class HandleDuplicatasReceber {
     async Handler(duplicatasReceber, idEmpresa) {
         const { idCliente, idTipoPagamento, idFuncionario } = duplicatasReceber
 
         const [cliente, tipoPamento, funcionario] = await Promise.all([
-            await ClienteRepo.buscarFiltro(`select idCliente,uuid from cliente where uuid = '${idCliente}'`),
-            await TipoPagamentoRepo.buscarFiltro(`select idTipoPagamento,uuid from where uuid = '${idTipoPagamento}'`),
-            await FuncionarioRepo.buscarFiltro(`select idFuncionario,uuid from funcionario where uuid = '${idFuncionario}'`)
+            ClienteRepo.buscarFiltro(`select idCliente,uuid from cliente where uuid = '${idCliente}'`),
+            TipoPagamentoRepo.buscarFiltro(`select idTipoPagamento,uuid from tipoPagamento where uuid = '${idTipoPagamento}'`),
+            FuncionarioRepo.buscarFiltro(`select idFuncionario,uuid from funcionario where uuid = '${idFuncionario}'`),
         ])
-        
+
         const duplicata = {
             ...duplicatasReceber, idEmpresa,
             uuid: v4(),
             idCliente: null,
             idTipoPagamento: null,
             idFuncionario: null,
-            updateAt: DateTime.local().toSQLDate(),
+            updateAt: DateTime.local().toSQLDate()
         }
 
         if (cliente[0].length > 0) {
@@ -37,9 +42,9 @@ class HandleDuplicatasReceber {
         if (validacoes.length > 0) {
             return validacoes;
         }
-        
+
         await DuplicataRepo.update(duplicata)
-        return true
+        return duplicata.uuid
     }
 }
 

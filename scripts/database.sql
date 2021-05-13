@@ -226,8 +226,16 @@ INNER JOIN tipopagamento tP
 ON c.idTipoPagamento  = tP.idTipoPagamento;
 
 
+create table duplicataNumero(
+    id int auto_increment primary key,
+    idEmpresa int,
+    numero int
+);
+
 create table duplicatasReceber(
     idDuplicata int auto_increment primary key,
+    uuid varchar(36),
+    idEmpresa int,
     numeroDuplicata varchar(10),
     idCliente int,
     idTipoPagamento int,
@@ -237,8 +245,11 @@ create table duplicatasReceber(
     dataVencimento date,
     dataPagamento date,
     valorTotal decimal(13,2),
+    valorPago decimal(13,2),
     valorDevedor decimal(13,2),
     observacao varchar(50),
+    createAt date,
+    updateAt date,
     FOREIGN KEY (idCliente) REFERENCES cliente (idCliente),
     FOREIGN KEY (idTipoPagamento) REFERENCES tipoPagamento (idTipoPagamento),
     FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario)

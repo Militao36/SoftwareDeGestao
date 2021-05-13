@@ -1,6 +1,6 @@
-import HandleSave from '../Handlers/DuplicatasReceber/DuplicatasReceberSave'
-import HandleUpdate from '../Handlers/DuplicatasReceber/DuplicatasReceberUpdate'
-import DuplicataRepo from '../Repositories/DuplicatasReceber'
+import HandleSave from '../Handlers/DuplicatasReceber/DuplicatasReceberSave';
+import HandleUpdate from '../Handlers/DuplicatasReceber/DuplicatasReceberUpdate';
+import DuplicataRepo from '../Repositories/DuplicatasReceber';
 
 class DuplicatasReceber {
     async post(req, res) {
